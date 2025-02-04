@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-^!40^w8&#8)q)qh5el)$5_$g@5fw0m#x!un8uyo@&5#qo0&)wa
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*', 'cs-webapps.bu.edu']
 
 
 # Application definition
@@ -129,5 +129,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
+    os.path.join(BASE_DIR, 'static'),
 ]
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_URL = "media/"
+
+import socket 
+CS_DEPLOYMENT_HOSTNAME = 'cs-webapps.bu.edu'
+if socket.gethostname() == CS_DEPLOYMENT_HOSTNAME:
+    STATIC_URL = '/kelhan/static'
