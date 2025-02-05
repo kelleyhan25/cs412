@@ -1,0 +1,23 @@
+{% load static %} 
+<html>
+    <head>
+        <title>Quote of the Day</title>
+        <link rel="stylesheet" href="{% static 'styles.css' %}">
+    </head>
+    <body>
+        <nav>
+            <ul>
+                <li><a href="{% url 'quotes_page' %}">Home</a></li>
+                <li><a href="{% url 'show_all' %}">Show All</a></li>
+                <li><a href="{% url 'about_page' %}">About</a></li>
+            </ul>
+        </nav>
+        {% block content %}
+        {% endblock %}
+    </body>
+
+    <footer>
+        <p>This page is brought to you by kelhan@bu.edu</p>
+        <p>Generated at: {{ current_time }}.</p>
+    </footer>
+</html>

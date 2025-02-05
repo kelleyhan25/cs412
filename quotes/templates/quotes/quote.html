@@ -1,0 +1,12 @@
+<!--quotes/templates/quotes/quote.html-->
+{% extends 'quotes/base.html' %}
+
+{% block content %}
+<div>
+    <h1>QUOTE OF THE DAY!</h1>
+    <p>"{{ quote }}"</p>
+    <p>- Ocean Vuong, Author of "On Earth We're Briefly Gorgeous"</p>
+    <img src="{{ image }}" alt="Ocean Vuong">
+</div>
+
+{% endblock %}

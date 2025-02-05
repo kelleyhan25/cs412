@@ -3,11 +3,38 @@ body {
     color: slategray;
     font-family: arial;
 }
+p {
+    text-align: center;
+    margin-left: 25%;
+    margin-right: 25%;
+    padding: 10px; 
+}
+
+.button {
+    background-color: aliceblue;
+    border: none; 
+    color: slategray; 
+    padding: 20px 34px; 
+    text-align: center; 
+    text-decoration: none;
+    display: block;
+    width: 400px;
+    font-size: 20px;
+    margin: 4px auto; 
+    cursor: pointer; 
+}
+
+table {
+    margin-left: 15%;
+    margin-right: 15%;
+    padding: 15px; 
+}
 
 h1,h2,h3,h4,h5{
     font-weight: normal;
     background: aliceblue;
     margin: 0; 
+    text-align: center;
 }
 
 a, a:visited {
@@ -27,5 +54,11 @@ li {
     list-style-type: none;
     display: inline-block; 
     margin-right: 10px; 
+}
+
+img {
+    display: block; 
+    width: 60%; 
+    margin: auto; 
 }
 

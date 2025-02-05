@@ -1,0 +1,22 @@
+<!--quotes/templates/quotes/show_all.html-->
+{% extends 'quotes/base.html' %}
+{% block content %}
+<h1>A List of All Quotes From Ocean Vuong!</h1>
+<div>
+    <table>
+        <tr>
+            <td>"{{ quote1 }}"</td>
+            <td><img src="{{ pic1 }}" alt="Ocean Vuong"></td>
+        </tr>
+        <tr>
+            <td>"{{ quote2 }}"</td>
+            <td><img src="{{ pic2 }}" alt="Ocean Vuong"></td>
+        </tr>
+        <tr>
+            <td>"{{ quote3 }}"</td>
+            <td><img src="{{ pic3 }}" alt="Ocean Vuong"></td>
+        </tr>
+    </table>
+</div>
+
+{% endblock %}
