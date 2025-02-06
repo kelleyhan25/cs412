@@ -1,6 +1,6 @@
 body {
-    background: #fff;
-    color: slategray;
+    background-color: royalblue;
+    color: gray;
     font-family: arial;
 }
 p {
@@ -11,7 +11,7 @@ p {
 }
 
 .button {
-    background-color: aliceblue;
+    background-color: rgb(243, 243, 168);
     border: none; 
     color: slategray; 
     padding: 20px 34px; 

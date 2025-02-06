@@ -12,9 +12,9 @@ QUOTES = [
 ]
 
 IMAGES = [
-    "static/Interview_2019_Web_Summer_OceanVuong.jpg",
-    "static/ov-1712956131052.jpg",
-    "static/ocean-vuong-the-advocate.jpg"
+    "/static/Interview_2019_Web_Summer_OceanVuong.jpg",
+    "/static/ov-1712956131052.jpg",
+    "/static/ocean-vuong-the-advocate.jpg"
 ]
 
 def main_page(request):
