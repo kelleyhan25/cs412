@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse
 import random
 import time
+import socket 
+CS_DEPLOYMENT_HOSTNAME = 'cs-webapps.bu.edu'
 
 # Create your views here.
 
@@ -11,11 +13,20 @@ QUOTES = [
     "I am thinking of beauty again, how some things are hunted because we have deemed them beautiful. If, relative to the history of our planet, an individual life is so short, a blink, as they say, then to be gorgeous, even from the day you're born to the day you die, is to be gorgeous only briefly."
 ]
 
-IMAGES = [
-    "/static/Interview_2019_Web_Summer_OceanVuong.jpg",
-    "/static/ov-1712956131052.jpg",
-    "/static/ocean-vuong-the-advocate.jpg"
-]
+if socket.gethostname() == CS_DEPLOYMENT_HOSTNAME:
+    IMAGES = [
+        "/kelhan/static/Interview_2019_Web_Summer_OceanVuong.jpg",
+        "/kelhan/static/ov-1712956131052.jpg",
+        "/kelhan/static/ocean-vuong-the-advocate.jpg"
+    ]
+else:
+    IMAGES = [
+        "/static/Interview_2019_Web_Summer_OceanVuong.jpg",
+        "/static/ov-1712956131052.jpg",
+        "/static/ocean-vuong-the-advocate.jpg"
+    ]
+
+
 
 def main_page(request):
     template = 'quotes/quote.html'
