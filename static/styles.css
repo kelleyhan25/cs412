@@ -1,6 +1,6 @@
 body {
-    background-color: royalblue;
-    color: gray;
+    background-color: rgb(116, 149, 246);
+    color: black;
     font-family: arial;
 }
 p {
@@ -8,12 +8,12 @@ p {
     margin-left: 25%;
     margin-right: 25%;
     padding: 10px; 
-}
+}            
 
 .button {
-    background-color: rgb(243, 243, 168);
+    background-color: palegoldenrod;
     border: none; 
-    color: slategray; 
+    color: black; 
     padding: 20px 34px; 
     text-align: center; 
     text-decoration: none;
@@ -32,7 +32,7 @@ table {
 
 h1,h2,h3,h4,h5{
     font-weight: normal;
-    background: aliceblue;
+    background: palegoldenrod;
     margin: 0; 
     text-align: center;
 }
@@ -40,7 +40,7 @@ h1,h2,h3,h4,h5{
 a, a:visited {
     display: block;
     padding: 10px 15px; 
-    color: slategray;
+    color: black;
     text-decoration: none;
 }
 
