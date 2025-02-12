@@ -1,19 +1,36 @@
 from django.shortcuts import render
 import time 
 import random 
+import socket 
+CS_DEPLOYMENT_HOSTNAME = 'cs-webapps.bu.edu'
 
-FOOD = [
+if socket.gethostname() == CS_DEPLOYMENT_HOSTNAME:
+    FOOD = [
         "/static/1*E5htcQnqzILj8iu2gb3BkQ.jpg",
         "/static/shengjian-mantou-26.jpg",
     ]
 
-SPECIAL_PIC = [
+    SPECIAL_PIC = [
     "/static/image-resizing.jpeg",
     "/static/9169jed2x1e81.jpg",
     "/static/image-resizing-1.jpeg",
     "/static/Unknown.jpeg",
     "/static/Unknown-1.jpeg",
 ]
+else:
+    FOOD = [
+        "/static/1*E5htcQnqzILj8iu2gb3BkQ.jpg",
+        "/static/shengjian-mantou-26.jpg",
+    ]
+
+    SPECIAL_PIC = [
+    "/static/image-resizing.jpeg",
+    "/static/9169jed2x1e81.jpg",
+    "/static/image-resizing-1.jpeg",
+    "/static/Unknown.jpeg",
+    "/static/Unknown-1.jpeg",
+]
+
 
 DAILY_SPECIAL = [
     "Shanghai-Style Chow Mein: comes with udon noodles with carrots, cabbage, onion, mushroom, and chicken, stir-fried in a delicious house sauce.",
