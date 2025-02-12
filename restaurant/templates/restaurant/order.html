@@ -1,0 +1,68 @@
+<!-- restaurant/templates/restaurant/order.html -->
+{% extends 'restaurant/base.html' %}
+
+{% block content %}
+<div>
+<h1>Place Your Order:</h1>
+
+<form action="{% url 'confirmation' %}" method="POST">
+    {% csrf_token %}
+    <h2>Daily Special $15.99</h2>
+    <input type="checkbox" id="dailyspecial" name="dailyspecial" value="{{daily_special}}">
+    <label for="dailyspecial">{{ daily_special }}</label> <br><br>
+    <img src="{{special_pic}}" style="width:10em; height:15em;" alt="daily special picture">
+    <h2>Dumplings</h2>
+    <input type="checkbox" id="panfried" name="dumpling" value="Shanghai Pan Fried Dumpling $8.99">
+    <label for="panfried">Shanghai Pan Fried Dumplings (6px)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$8.99</label><br>
+    <input type="checkbox" id="soup" name="dumpling" value="Shanghai Soup Dumpling $10.99">
+    <label for="soup">Shanghai Soup Dumplings (8px)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$10.99</label><br>
+    <input type="checkbox" id="buns" name="dumpling" value="Shanghai Pan Fried Buns $12.99">
+    <label for="buns">Shanghai Pan Fried Buns (4px)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$12.99</label><br>
+    <input type="checkbox" id="steam" name="dumpling" value="Steamed Dumplings $6.99">
+    <label for="steam">Steamed Dumplings (6px)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$6.99</label><br><br>
+
+    <h2>Fillings</h2>
+    <input type="checkbox" id="pork" name="filling" value="Pork">
+    <label for="pork">Pork</label><br>
+    <input type="checkbox" id="chicken" name="filling" value="Chicken">
+    <label for="chicken">Chicken</label><br>
+    <input type="checkbox" id="beef" name="filling" value="Beef">
+    <label for="beef">Beef</label><br>
+    <input type="checkbox" id="tofu" name="filling" value="Tofu">
+    <label for="tofu">Tofu</label><br>
+    <input type="checkbox" id="napa" name="filling" value="Napa Cabbage">
+    <label for="napa">Napa Cabbage</label><br>
+    <input type="checkbox" id="chives" name="filling" value="Chives">
+    <label for="chives">Chives</label><br>
+    <input type="checkbox" id="corn" name="filling" value="Corn">
+    <label for="corn">Corn</label><br>
+    <input type="checkbox" id="mushroom" name="filling" value="Mushroom">
+    <label for="mushroom">Mushroom</label><br><br>
+
+    <h2>Drinks</h2>
+    <input type="checkbox" id="soy" name="drink" value="Soy Milk">
+    <label for="soy">Soy Milk&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$4.99</label><br>
+    <input type="checkbox" id="apple" name="drink" value="Apple Juice">
+    <label for="apple">Apple Juice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$2.99</label><br>
+    <input type="checkbox" id="soda" name="drink" value="Soda">
+    <label for="soda">Soda&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$3.99</label><br>
+    <input type="checkbox" id="beer" name="drink" value="Beer">
+    <label for="beer">Beer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$5.99</label><br><br><br>
+
+    <h2>Customer Info</h2>
+    <label for="name">Name:</label><br> 
+    <input type="text" id="name" name="name" required><br>
+    <label for="phone">Phone Number:</label><br> 
+    <input type="text" id="phone" name="phone" required><br>
+    <label for="email">Email:</label><br> 
+    <input type="text" id="email" name="email" required><br>
+    <label for="special">Special Instructions:</label><br> 
+    <textarea name="special" id="special"></textarea>
+    <br><br>
+
+
+    <input type="submit">
+
+</form>
+</div>
+{% endblock %}

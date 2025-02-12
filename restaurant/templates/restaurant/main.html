@@ -1,0 +1,73 @@
+<!-- restaurant/templates/restaurant/order.html -->
+{% extends 'restaurant/base.html' %}
+
+{% block content %}
+<div>
+<h1>Dumpling Kitchen</h1> <br><br>
+<img src="{{ pic2 }}" style="width:10em; height: 15em; margin-right: 40px; margin-left:15px;" alt="dumpling"> 
+<div class="table-container">
+    <table>
+        <th>Hours of Operations</th>
+        <tr>
+            <td>Monday</td>
+            <td>9:30am to 5:30pm</td>
+        </tr>
+        <tr>
+            <td>Tuesday</td>
+            <td>9:00am to 4:30pm</td>
+        </tr>
+        <tr>
+            <td>Wednesday</td>
+            <td>CLOSED</td>
+        </tr>
+        <tr>
+            <td>Thursday</td>
+            <td>9:30am to 6:30pm</td>
+        </tr>
+        <tr>
+            <td>Friday</td>
+            <td>10:00am to MIDNIGHT</td>
+        </tr>
+        <tr>
+            <td>Saturday</td>
+            <td>11:00am to 1am</td>
+        </tr>
+        <tr>
+            <td>Sunday</td>
+            <td>9:00am to 8pm </td>
+        </tr>
+    </table>
+</div>
+<br><br><br>
+
+<div class="table-container">
+    <table>
+        <th>Locations (USA, Singapore)</th>
+        <tr>
+            <td>Northern California</td>
+            <td>1388 Broadway, Millbrae CA 94030</td>
+        </tr>
+        <tr>
+            <td>Disneyland</td>
+            <td>1313 Disneyland Dr Anaheim, CA 92802</td>
+        </tr>
+        <tr>
+            <td>Southern California</td>
+            <td>1250 Bellflower Blvd, Long Beach, CA 90840</td>
+        </tr>
+        <tr>
+            <td>Massachusetts</td>
+            <td>227 Park Dr, Boston MA 02215</td>
+        </tr>
+        <tr>
+            <td>Singapore</td>
+            <td>12 Kent Ridge Dr, Singapore 119243</td>
+        </tr>
+        
+    </table>
+    
+</div>
+
+<img src="{{ pic1 }}" style="width: 20em; height:15em; margin-left: 25px;" alt="dumpling">
+</div>
+{% endblock %}

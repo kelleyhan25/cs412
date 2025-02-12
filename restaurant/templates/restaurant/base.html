@@ -1,0 +1,18 @@
+<!-- restaurant/templates/restaurant/base.html -->
+{% load static %}
+<html>
+    <head>
+        <title>Dumpling Kitchen</title>
+        <link rel="stylesheet" href="{% static 'restaurant.css' %}">
+    </head>
+    <body>
+        <nav>
+            <ul>
+                <li><a href="{% url 'main_page' %}">Home</a></li>
+                <li><a href="{% url 'order_page' %}">Order</a></li>
+            </ul>
+        </nav>
+        {% block content %}
+        {% endblock %}
+    </body>
+</html>

@@ -1,0 +1,35 @@
+ul {
+    list-style-type: none;   
+    padding: 10px;
+    margin: 0;
+}
+body {
+    background-color: palegoldenrod;
+    margin-left: 30px;
+}
+
+a, a:visited {
+    display: block;
+    padding: 10px 15px; 
+    color: black;
+    text-decoration: none;
+    font-size: 25px;
+    
+}
+
+li {
+    list-style-type: none;
+    display: inline-block; 
+    margin-right: 10px; 
+  
+}
+
+.table-container {
+    display: inline-block; 
+    vertical-align: top;
+    margin-right: 20px;
+}
+
+h1 {
+    text-align: center;
+}
