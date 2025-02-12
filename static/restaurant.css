@@ -33,3 +33,8 @@ li {
 h1 {
     text-align: center;
 }
+
+.receipt {
+    width: 50%; 
+    margin:auto; 
+}

@@ -4,7 +4,7 @@
 {% block content %}
 <div>
 <h1>Thank You!</h1>
-<div class="receipt_header">
+<div class="receipt">
     <p> Dumpling Kitchen</p>
     <p> 227 Park Dr</p>
     <p> Boston, MA 02215</p>
@@ -12,52 +12,52 @@
     <h4>{{time_right_now}}</h4>
     <p>brought to you by kelhan@bu.edu</p>
     <p>**************************</p>
+    <p>{{name}} {{email}} {{phone}}</p>
+    <p>**************************</p>
+    <h3>Ordered:</h3>
+    <p>
+        {% if daily_special %}
+            {{ daily_special }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$15.99
+        {% else %}
+        {% endif %}
+        
+    </p>
+    <p>
+    {% if dumpling %}
+        {% for item in dumpling %}
+                {{item}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>{% if not forloop.last %} {% endif %}
+        {% endfor %}
+        {% else %}
+        {% endif %}
+    </p>
+    <p>
+    {% if filling %}
+            Fillings:
+        {% for item in filling %}
+            {{item}}{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+        {% else %}
+        {% endif %}
+    </p>
+    <p> 
+        {% if drink %}
+        {% for item in drink %}
+            {{item}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{drink_price}} <br>{% if not forloop.last %} {% endif %}
+        {% endfor %}
+        {% else %}
+        {% endif %}
+    </p> 
+
+    <p>**************************</p>
+    <p>Additional comments: {{special}}</p>
+    <p>**************************</p>
+
+    <h4>Subtotal&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; {{ sub_total }}</h4>
+    <h4>Tax&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;    {{ tax }}</h4>
+    <h3>Total&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {{ total }}</h3>
+    <p>**************************</p>
+    <h3>Your order will be ready at {{ready_time}}!</h3>
 </div>
 
-<p>{{name}} {{email}} {{phone}}</p>
-<p>**************************</p>
-<h3>Ordered:</h3>
-<p>
-    {% if daily_special %}
-        {{ daily_special }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$15.99
-    {% else %}
-    {% endif %}
-    
-</p>
-<p>
-{% if dumpling %}
-    {% for item in dumpling %}
-            {{item}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>{% if not forloop.last %} {% endif %}
-    {% endfor %}
-    {% else %}
-    {% endif %}
-</p>
-<p>
-{% if filling %}
-        Fillings:
-    {% for item in filling %}
-        {{item}}{% if not forloop.last %}, {% endif %}
-    {% endfor %}
-    {% else %}
-    {% endif %}
-</p>
-<p> 
-    {% if drink %}
-    {% for item in drink %}
-        {{item}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{drink_price}} <br>{% if not forloop.last %} {% endif %}
-    {% endfor %}
-    {% else %}
-    {% endif %}
-</p> 
-
-<p>**************************</p>
-<p>Additional comments: {{special}}</p>
-<p>**************************</p>
-
-<h4>Subtotal&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; {{ sub_total }}</h4>
-<h4>Tax&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;    {{ tax }}</h4>
-<h3>Total&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {{ total }}</h3>
-<p>**************************</p>
-<h3>Your order will be ready at {{ready_time}}!</h3>
 </div>
 {% endblock %}
