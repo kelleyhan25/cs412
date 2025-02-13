@@ -1,3 +1,8 @@
+# File: urls.py 
+# Author: Kelley Han (kelhan@bu.edu), 2/11/2025
+# Description: URLS to view mapping for restaurant app 
+
+
 from django.urls import path 
 from django.conf import settings
 from . import views 

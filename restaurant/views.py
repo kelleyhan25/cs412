@@ -1,3 +1,7 @@
+# File: views.py 
+# Author: Kelley Han (kelhan@bu.edu), 2/11/2025 
+# Description: Functions that provide HTTP Response for pages in the restaurant app
+
 from django.shortcuts import render
 import time 
 import random 
@@ -6,29 +10,29 @@ CS_DEPLOYMENT_HOSTNAME = 'cs-webapps.bu.edu'
 
 if socket.gethostname() == CS_DEPLOYMENT_HOSTNAME:
     FOOD = [
-        "/static/1*E5htcQnqzILj8iu2gb3BkQ.jpg",
-        "/static/shengjian-mantou-26.jpg",
+        "https://cs-webapps.bu.edu/kelhan/static/1*E5htcQnqzILj8iu2gb3BkQ.jpg",
+        "https://cs-webapps.bu.edu/kelhan/static/shengjian-mantou-26.jpg",
     ]
 
     SPECIAL_PIC = [
-    "/static/image-resizing.jpeg",
-    "/static/9169jed2x1e81.jpg",
-    "/static/image-resizing-1.jpeg",
-    "/static/Unknown.jpeg",
-    "/static/Unknown-1.jpeg",
+    "https://cs-webapps.bu.edu/kelhan/static/image-resizing.jpeg",
+    "https://cs-webapps.bu.edu/kelhan/static/9169jed2x1e81.jpg",
+    "https://cs-webapps.bu.edu/kelhan/static/image-resizing-1.jpeg",
+    "https://cs-webapps.bu.edu/kelhan/static/Unknown.jpeg",
+    "https://cs-webapps.bu.edu/kelhan/static/Unknown-1.jpeg",
 ]
 else:
     FOOD = [
-        "/static/1*E5htcQnqzILj8iu2gb3BkQ.jpg",
-        "/static/shengjian-mantou-26.jpg",
+        "https://cs-webapps.bu.edu/kelhan/static/1*E5htcQnqzILj8iu2gb3BkQ.jpg",
+        "https://cs-webapps.bu.edu/kelhan/static/shengjian-mantou-26.jpg",
     ]
 
     SPECIAL_PIC = [
-    "/static/image-resizing.jpeg",
-    "/static/9169jed2x1e81.jpg",
-    "/static/image-resizing-1.jpeg",
-    "/static/Unknown.jpeg",
-    "/static/Unknown-1.jpeg",
+    "https://cs-webapps.bu.edu/kelhan/static/image-resizing.jpeg",
+    "https://cs-webapps.bu.edu/kelhan/static/9169jed2x1e81.jpg",
+    "https://cs-webapps.bu.edu/kelhanstatic/image-resizing-1.jpeg",
+    "https://cs-webapps.bu.edu/kelhan/static/Unknown.jpeg",
+    "https://cs-webapps.bu.edu/kelhan/static/Unknown-1.jpeg",
 ]
 
 
@@ -42,7 +46,7 @@ DAILY_SPECIAL = [
 
 # Create your views here.
 def main_page(request):
-    '''Show the form to the user.'''
+    '''Show the main page to the user.'''
     template_name = 'restaurant/main.html'
     context = {
         'pic1':FOOD[0],
@@ -53,6 +57,7 @@ def main_page(request):
 def order_page(request):
     '''Show the form to the user.'''
     template_name = 'restaurant/order.html'
+    # For randomized daily special, reloads every time the user reloads the webpage
     picture_num = random.randint(0,4)
     context = {
         'daily_special':DAILY_SPECIAL[picture_num],
@@ -64,6 +69,7 @@ def confirmation(request):
     '''Process the form submission and generate a result'''
     template_name = 'restaurant/confirmation.html'
     print(request)
+    # Collecting data that the user submitted in the form
     if request.POST: 
         name = request.POST['name']
         phone = request.POST['phone']
@@ -94,9 +100,12 @@ def confirmation(request):
             "Beer": 5.99,
         }
     
+    # Calculating the time it takes for order to be ready at random 
     current_time = time.time()
     random_time = current_time + random.randint(30 * 60, 60 * 60)
     confirmation_time = time.ctime(random_time)
+
+    # Calculates the subtotal, tax at 9% and final price
     sub_total = 0
     dumpling_price = 0
     drink_price = 0
@@ -108,6 +117,8 @@ def confirmation(request):
         sub_total += drink_price
     if daily_special:
         sub_total += 15.99
+
+    # Final prices 
     tax = sub_total * 0.09
     rounded_tax = round(tax, 2)
     total = sub_total + rounded_tax

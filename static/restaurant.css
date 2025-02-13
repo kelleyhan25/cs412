@@ -1,3 +1,7 @@
+/* File: restaurant.css */
+/* Author: Kelley Han (kelhan@bu.edu), 2/11/2025 */
+/* Description: static CSS file that is linked in base.html for the restaurant app */
+
 ul {
     list-style-type: none;   
     padding: 10px;
