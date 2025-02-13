@@ -44,7 +44,7 @@
     <p> 
         {% if drink %}
         {% for item in drink %}
-            {{item}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{drink_price}} <br>{% if not forloop.last %} {% endif %}
+            {{item}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${{drink_price}} <br>{% if not forloop.last %} {% endif %}
         {% endfor %}
         {% else %}
         {% endif %}
@@ -54,9 +54,9 @@
     <p>Additional comments: {{special}}</p>
     <p>**************************</p>
 
-    <h4>Subtotal&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; {{ sub_total }}</h4>
-    <h4>Tax&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;    {{ tax }}</h4>
-    <h3>Total&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {{ total }}</h3>
+    <h4>Subtotal&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; ${{ sub_total }}</h4>
+    <h4>Tax&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;    ${{ tax }}</h4>
+    <h3>Total&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ${{ total }}</h3>
     <p>**************************</p>
     <h3>Your order will be ready at {{ready_time}}!</h3>
 </div>
