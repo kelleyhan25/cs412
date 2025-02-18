@@ -1,13 +1,12 @@
-<!--blog/show_all.html-->
+<!--blog/article.html-->
 {% extends 'blog/base.html' %}
 {% block content %}
-<h1>Showing all articles</h1>
+<h1>{{article.title}}</h1>
 
-<!--this displays the queryset of all articles.-->
+<!--this displays the a single articles.-->
 <!-- {{articles}}-->
 <main class="grid-container">
-    <!--scriplet code for a for loop-->
-    {% for article in articles %}
+    
     <article>
         <div>
             <h2>{{article.title}}</h2>
@@ -16,13 +15,12 @@
                 {{article.text}}
             </p>
         </div>
-        <a href="{% url 'article' article.pk %}"></a>
         <img src="{{article.image_url}}" alt="">
         
     </article>
     <hr>
 
-    {% endfor %}
+
 </main>
 
 {% endblock %}
