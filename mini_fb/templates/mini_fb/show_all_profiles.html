@@ -1,7 +1,8 @@
-<!--templates/mini_fb/show_all.html-->
+<!--templates/mini_fb/show_all_profiles.html-->
 {% extends 'mini_fb/base.html' %}
-<h1>Showing All Profiles</h1>
+
 {% block content %}
+<h1>Showing All Profiles</h1>
 <table>
     {% for p in profiles %}
             {% if forloop.first or forloop.counter0|divisibleby:3 %}
@@ -9,7 +10,9 @@
                 {% endif %}
                 <td>
                     {% if p.profile_image_url %}
-                    <img src="{{p.profile_image_url}}" alt="{{p.profile_image_url}}">
+                    <a href="{% url 'profile' p.pk %}">
+                        <img src="{{p.profile_image_url}}" alt="{{p.profile_image_url}}">
+                    </a>
                     {% endif %}
                     <h3>{{p.first_name}} {{p.last_name}}</h3>
                     <p>Lives in: {{p.city}}</p> <br><br>
