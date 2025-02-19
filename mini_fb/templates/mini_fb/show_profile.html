@@ -1,11 +1,10 @@
 <!--templates/mini_fb/show_profile.html-->
 {% extends 'mini_fb/base.html' %}
 {% block content %}
-<h1>{{profile.first_name}} {{profile.last_name}}</h1>
 <table>
     <tr>
         <td><img class="profile-pic" src="{{profile.profile_image_url}}" alt="{{profile.profile_image_url}}"></td>
-        <td class="info">Lives in: {{profile.city}} <br>
+        <td class="info"><h4>{{profile.first_name}} {{profile.last_name}}</h4>Lives in: {{profile.city}} <br>
             Email address: {{profile.email_address}}
         </td>
     </tr>
