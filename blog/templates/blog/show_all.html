@@ -16,9 +16,9 @@
                 {{article.text}}
             </p>
         </div>
-        <a href="{% url 'article' article.pk %}"></a>
-        <img src="{{article.image_url}}" alt="">
-        
+        <a href="{% url 'article' article.pk %}">
+            <img src="{{article.image_url}}" alt="">
+        </a>
     </article>
     <hr>
 
