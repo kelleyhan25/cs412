@@ -1,3 +1,7 @@
+# File: mini_fb/models.py
+# Author: Kelley Han kelhan@bu.edu 2/18/25
+# Description: includes the Profiles model for facebook profile, includes data attributes
+
 from django.db import models
 
 # Create your models here.

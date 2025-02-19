@@ -1,3 +1,7 @@
+# File: mini_fb/views.py
+# Author: Kelley Han (kelhan@bu.edu), 2/18/25
+# Description: includes the functions for views to show all profiles and show individual profiles 
+
 from django.shortcuts import render
 from .models import Profile
 from django.views.generic import ListView, DetailView

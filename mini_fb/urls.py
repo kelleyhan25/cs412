@@ -1,4 +1,6 @@
-# blog/urls.py
+# File: mini_fb/urls.py
+# Author: Kelley Han (kelhan@bu.edu), 2/18/25
+# Description: URL patterns for the mini facebook application, includes Show All and individual profiles 
 
 from django.urls import path 
 from django.conf import settings 
