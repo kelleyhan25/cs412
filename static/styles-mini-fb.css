@@ -1,10 +1,14 @@
 /* File: static/styles-mini-fb.css */
 /* Author: Kelley Han kelhan@bu.edu 2/18/25 */
 /* Description: CSS file for all the styling of mini fb application */
-
-h1, h2 {
-    margin-left: 15px;
-    margin-right: 15px;
+body {
+    font-family: Helvetica;
+    background-color: rgb(228, 239, 248);
+}
+h1 {
+    margin: 0; 
+    font-size: 24px;
+    background-color: rgb(80, 80, 255);
 }
 
 td {
@@ -12,8 +16,11 @@ td {
     padding: 25px; 
 }
 
-body {
-    background-color: darkseagreen;
+header {
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(80, 80, 255);
 }
 
 p, h3{
@@ -28,16 +35,21 @@ a, a:visited {
 }
 
 ul {
-    list-style-type: none;   
+    list-style-type: none;  
+    display: flex;  
     padding: 10px;
     margin: 0;
+    padding: 0; 
 }
 
 li {
+    margin-top: 15px;
+    font-size: 20px;
     list-style-type: none;
     display: inline-block; 
-    margin-right: 10px; 
+    font-weight: bold;
 }
+
 
 .profile-pic {
     width: 450px; 
@@ -48,9 +60,11 @@ li {
 }
 
 img {
-    width: 250px; 
-    height: 300px; 
+    width: 150px; 
+    height: 150px; 
     margin-left: 100px;
     margin-right: 100px;
+    border: 5px solid #555; 
+    border-radius: 15%;
 }
 

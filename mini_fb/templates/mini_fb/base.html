@@ -8,14 +8,17 @@
         <link rel="stylesheet" href="{% static 'styles-mini-fb.css' %}">
     </head>
     <body>
-        <h1>Mini Facebook</h1>
-        <nav>
-            <ul>
-                <li><a href="{% url 'show_all_profiles' %}">Home</a></li>
-                <li><a href="{% url 'show_all_profiles' %}">Show All Profiles</a></li>
-            </ul>
-            <br>
-        </nav>
+        <header>
+            <h1>&nbsp;&nbsp;&nbsp;&nbsp;Mini Facebook</h1>
+            <nav>
+                <ul>
+                    <!--<li><a href="{% url 'show_all_profiles' %}">Home</a></li>-->
+                    <li><a href="{% url 'show_all_profiles' %}">Show All Profiles</a></li>
+                </ul>
+                <br>
+            </nav>
+        </header>
+        
         {% block content %}
         {% endblock %}
     </body>
