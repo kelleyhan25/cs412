@@ -22,7 +22,7 @@
 
     <div>
     <h2>Comments</h2>
-
+    <h3><a href="{% url 'create_comment' article.pk %}">Create a comment</a></h3>
     {% for comment in article.get_all_comments %}
     <article>
         <div>

@@ -50,5 +50,42 @@ class CreateCommentView(CreateView):
 
     def get_success_url(self) -> str:
         '''Return the URL to redirect to after successfully submitting form.'''
-        return reverse('show_all')
+        #return reverse('show_all')
         ## note: this is not ideal, because we are redirected to the main page.
+        pk = self.kwargs['pk']
+        # call reverse to generate the URL for this Article
+        return reverse('article', kwargs={'pk':pk})
+    
+    def get_context_data(self):
+        '''Return the dictionary of context variables for use in the template.'''
+
+        # calling the superclass method
+        context = super().get_context_data()
+
+        # find/add the article to the context data
+        # retrieve the PK from the URL pattern
+        pk = self.kwargs['pk']
+        article = Article.objects.get(pk=pk)
+
+        # add this article into the context dictionary:
+        context['article'] = article
+        return context
+
+    def form_valid(self, form):
+        '''This method handles the form submission and saves the 
+        new object to the Django database.
+        We need to add the foreign key (of the Article) to the Comment
+        object before saving it to the database.
+        '''
+        
+		# instrument our code to display form fields: 
+        print(f"CreateCommentView.form_valid: form.cleaned_data={form.cleaned_data}")
+        
+        # retrieve the PK from the URL pattern
+        pk = self.kwargs['pk']
+        article = Article.objects.get(pk=pk)
+        # attach this article to the comment
+        form.instance.article = article # set the FK
+
+        # delegate the work to the superclass method form_valid:
+        return super().form_valid(form)
