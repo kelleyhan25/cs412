@@ -3,6 +3,7 @@
 # Description: includes the Profiles model for facebook profile, includes data attributes
 
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 
@@ -25,6 +26,10 @@ class Profile(models.Model):
 
         messages = StatusMessage.objects.filter(profile=self)
         return messages
+    
+    def get_absolute_url(self):
+        '''return the URL to display show an instance of the profile'''
+        return reverse('profile', kwargs={'pk':self.pk})
 
 class StatusMessage(models.Model):
     '''Encapsulates the Facebook status message.'''
