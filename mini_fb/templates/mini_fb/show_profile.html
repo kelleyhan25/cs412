@@ -11,7 +11,16 @@
         </td>
     </tr>
 </table>
-
-
+<div>
+    <h2 style="text-align: left;">{{profile.first_name}}'s Status Messages</h2>
+    {% for status in profile.get_status_messages %}
+    <profile>
+        <div>
+            <p style="text-align: left;">{{status.message}}</p>
+            <strong>{{status.time_stamp}}</strong>
+        </div>
+    </profile>
+    {% endfor %}
+</div>
 
 {% endblock %}
