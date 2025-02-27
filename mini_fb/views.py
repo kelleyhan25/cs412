@@ -21,7 +21,7 @@ class ShowProfilePageView(DetailView):
     model = Profile
     template_name = 'mini_fb/show_profile.html'
     context_object_name = 'profile'
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs):  #i attempted to do this without the **kwargs, but it wouldn't show. so i used the default get_context_data that filled in on vscode including the **kwargs
         context = super().get_context_data(**kwargs)
         context['form'] = CreateStatusMessageForm()
         return context

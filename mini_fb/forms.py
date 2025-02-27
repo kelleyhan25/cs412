@@ -4,6 +4,9 @@ from django.forms import TextInput
 class CreateProfileForm(forms.ModelForm):
 
     '''A form to add a profile to the database.'''
+    first_name = forms.CharField(label="First Name",required=True)
+    last_name = forms.CharField(label="Last Name", required=True)
+    city = forms.CharField(label="City", required=True)
 
     class Meta: 
         '''associate the form with a model from the database'''
