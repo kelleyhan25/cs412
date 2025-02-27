@@ -28,10 +28,12 @@ class ShowProfilePageView(DetailView):
 
 
 class CreateProfileView(CreateView):
+    '''subclass of createview to display the form for creating a profile'''
     form_class = CreateProfileForm
     template_name = 'mini_fb/create_profile_form.html'
     
 class CreateStatusView(CreateView):
+    '''subclass of createview to display the form for creating a status message'''
     form_class = CreateStatusMessageForm
     template_name = 'mini_fb/create_status_form.html'
 
