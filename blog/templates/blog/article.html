@@ -7,8 +7,10 @@
 <main class="grid-container">
     
     <article class="featured">
-        {% if article.image_url %}
-		<img src="{{article.image_url}}" alt="{{article.image_url}}">
+        {% if article.image_file %}
+		<img src="{{article.image_file.url}}" alt="">
+        {% else %}
+        <h3>No Image</h3>
 		{% endif %}
         
         <div>
@@ -17,6 +19,7 @@
         <p>
         {{article.text}}
         </p>
+        <h3><a href="{% url 'update_article' article.pk %}">Update Article</a></h3>
         </div>
     </article>
 
@@ -29,6 +32,9 @@
         <strong>by {{comment.author}} at {{comment.published}}</strong>
         <p>
         {{comment.text}}
+        <br>
+        <a href="{% url 'delete_comment' comment.pk %}">Delete</a>
+        </p>
         </div>
     </article>
 

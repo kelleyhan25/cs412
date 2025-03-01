@@ -1,10 +1,10 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView 
 from django.urls import reverse
 # Create your views here.
-from .models import Article 
+from .models import Article, Comment
 import random
-from .forms import CreateArticleForm, CreateCommentForm
+from .forms import CreateArticleForm, CreateCommentForm, UpdateArticleForm
 
 class ShowAllView(ListView):
     '''Define a view class to show all blog Articles.'''
@@ -41,6 +41,12 @@ class CreateArticleView(CreateView):
 
     form_class = CreateArticleForm
     template_name = "blog/create_article_form.html"
+
+    def form_valid(self, form):
+        '''override the default method to add some debug info'''
+        print(f'CreateArticleView.form_valid(): {form.cleaned_data}')
+
+        return super().form_valid(form)
 
 class CreateCommentView(CreateView):
     '''A view to create a new comment and save it to the database.'''
@@ -89,3 +95,22 @@ class CreateCommentView(CreateView):
 
         # delegate the work to the superclass method form_valid:
         return super().form_valid(form)
+    
+
+class UpdateArticleView(UpdateView):
+    '''view class to handle update of an article based on its PK'''
+    model = Article
+    form_class = UpdateArticleForm
+    template_name = "blog/update_article_form.html"
+
+class DeleteCommentView(DeleteView):
+    '''view class to delete a comment on an article'''
+    model = Comment
+    template_name = "blog/delete_comment_form.html"
+    context_object_name = 'comment'
+    def get_success_url(self):
+        '''return the URL to redirect after a success delete'''
+        pk = self.kwargs['pk']
+        comment = Comment.objects.get(pk=pk)
+        article = comment.article
+        return reverse('article', kwargs={'pk':article.pk})
