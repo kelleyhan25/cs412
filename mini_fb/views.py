@@ -4,8 +4,8 @@
 
 from django.shortcuts import render
 from .models import Profile, StatusMessage, StatusImage, Image
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
-from .forms import CreateProfileForm, CreateStatusMessageForm, UpdateProfileForm
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from .forms import CreateProfileForm, CreateStatusMessageForm, UpdateProfileForm, UpdateStatusForm
 from django.urls import reverse
 # Create your views here.
 
@@ -73,3 +73,47 @@ class UpdateProfileView(UpdateView):
     def get_success_url(self):
         pk = self.kwargs['pk']
         return reverse('profile', kwargs={'pk':pk})
+    
+class DeleteStatusMessageView(DeleteView):
+    '''a view to delete a status message and remove it from the database.'''
+    template_name = 'mini_fb/delete_status_form.html'
+    model = StatusMessage
+    context_object_name = 'status_message'
+
+    def get_success_url(self):
+        '''returns the URL that we should be redirected to after deletion'''
+        pk = self.kwargs['pk']
+        status_message = StatusMessage.objects.get(pk=pk)
+        profile = status_message.profile
+        return reverse('profile', kwargs={'pk':profile.pk})
+
+class UpdateStatusMessageView(UpdateView):
+    '''a view to update the status message text and update the database.'''
+    form_class = UpdateStatusForm
+    template_name = 'mini_fb/update_status_form.html'
+    model = StatusMessage
+
+    def form_valid(self, form):
+        return super().form_valid(form)
+    
+    def get_context_data(self):
+        '''Return the dictionary of context variables for use in the template.'''
+
+        # calling the superclass method
+        context = super().get_context_data()
+
+        # find/add the article to the context data
+        # retrieve the PK from the URL pattern
+        pk = self.kwargs['pk']
+        status_message = StatusMessage.objects.get(pk=pk)
+
+        # add this article into the context dictionary:
+        context['status_message'] = status_message
+        return context
+    
+    def get_success_url(self):
+        pk = self.kwargs['pk']
+        status_message = StatusMessage.objects.get(pk=pk)
+        profile = status_message.profile
+        return reverse('profile', kwargs={'pk':profile.pk})
+    

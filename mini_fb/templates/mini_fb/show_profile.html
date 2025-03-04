@@ -8,8 +8,8 @@
         <td><img class="profile-pic" src="{{profile.profile_image_url}}" alt="{{profile.profile_image_url}}"></td>
         <td class="info"><h4>{{profile.first_name}} {{profile.last_name}}</h4>Lives in: {{profile.city}} <br><br>
             Email address: {{profile.email_address}} <br> <br>
-            <a href="{% url 'create_status' profile.pk %}" style="border: 4px; padding: 4px; margin: 1px; border-radius: 8px; background-color:rgb(80, 80, 255); width: 155px">Create Status</a> <br>
-            <a href="{% url 'update_profile' profile.pk %}" style="border: 4px; padding: 4px; margin: 1px; border-radius: 8px; background-color:rgb(80, 80, 255); width: 163px">Update Profile</a>
+            <a href="{% url 'create_status' profile.pk %}" style="border: 4px; padding: 4px; margin: 1px; border-radius: 8px; background-color:rgb(80, 80, 255); width: 167px; font-weight: bold; display: inline-flex;">Create Status</a> 
+            <a href="{% url 'update_profile' profile.pk %}" style="border: 4px; padding: 4px; margin: 1px; border-radius: 8px; background-color:rgb(80, 80, 255); width: 174px; font-weight: bold;display: inline-flex;">Update Profile</a>
         </td>
     </tr>
 </table>
@@ -24,6 +24,8 @@
                 <img style="margin:0px;" src='{{img.image_file.url}}' alt='{{img}}'>
                 <br><br>
             {% endfor %}
+            <a href="{% url 'update_status' status.pk %}" style="border: 4px; padding: 4px; margin: 1px; border-radius: 8px; background-color:rgb(80, 80, 255); width: 50px; font-weight: bold;display: inline-flex;">Update</a>
+            <a href="{% url 'delete_status' status.pk %}" style="border: 4px; padding: 4px; margin: 1px; border-radius: 8px; background-color:rgb(80, 80, 255); width: 50px; font-weight: bold;display: inline-flex;">Delete</a>
         </div>
     </profile>
     {% endfor %}

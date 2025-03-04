@@ -10,7 +10,9 @@ from .views import *
 urlpatterns = [
     path('', ShowAllProfilesView.as_view(), name='show_all_profiles'), #show all profiles
     path('profile/<int:pk>', ShowProfilePageView.as_view(), name='profile'), #Show singular profile
-    path('create_profile', CreateProfileView.as_view(), name="create_profile"), 
-    path('profile/<int:pk>/create_status', CreateStatusView.as_view(), name="create_status"),
-    path('profile/<int:pk>/update', UpdateProfileView.as_view(), name="update_profile"), 
+    path('create_profile', CreateProfileView.as_view(), name="create_profile"), #create profile form
+    path('profile/<int:pk>/create_status', CreateStatusView.as_view(), name="create_status"), #create status message form
+    path('profile/<int:pk>/update', UpdateProfileView.as_view(), name="update_profile"), #update profile form 
+    path('status/<int:pk>/delete', DeleteStatusMessageView.as_view(), name="delete_status"), #delete status message form 
+    path('status/<int:pk>/update', UpdateStatusMessageView.as_view(), name="update_status"), #update status message form 
 ]
