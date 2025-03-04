@@ -4,11 +4,12 @@
 {% extends 'mini_fb/base.html' %}
 {% block content %}
 <h2>Post a status message for {{profile.first_name}}</h2>
-<form action="{% url 'create_status' profile.pk %}" method="POST">
+<form action="{% url 'create_status' profile.pk %}" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <table>
         {{form.as_table}}
     </table>
+    <input type="file" name="files" multiple><br><br>
 
     <input type="submit" name="submit" value="Create Status">
 </form>

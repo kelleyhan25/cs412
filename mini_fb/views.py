@@ -3,7 +3,7 @@
 # Description: includes the functions for views to show all profiles and show individual profiles 
 
 from django.shortcuts import render
-from .models import Profile, StatusMessage
+from .models import Profile, StatusMessage, StatusImage, Image
 from django.views.generic import ListView, DetailView, CreateView
 from .forms import CreateProfileForm, CreateStatusMessageForm
 from django.urls import reverse
@@ -41,6 +41,15 @@ class CreateStatusView(CreateView):
         pk = self.kwargs['pk']
         profile = Profile.objects.get(pk=pk)
         form.instance.profile = profile
+        sm = form.save()
+        files = self.request.FILES.getlist('files')
+        for file in files:
+            image = Image(profile=profile)
+            image.image_file = file
+            image.save()
+
+            status_image = StatusImage(status_message=sm, image=image)
+            status_image.save()
         return super().form_valid(form)
     
     def get_context_data(self):
