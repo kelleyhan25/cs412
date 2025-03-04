@@ -18,13 +18,18 @@
     <profile>
         <div>
             <p style="text-align: left;">{{status.message}}</p>
-            <strong>{{status.time_stamp}}</strong>
+            <strong>{{status.time_stamp}}</strong><br><br>
+            {% for img in status.get_images %}
+                <img style="margin:0px;" src='{{img.image_file.url}}' alt='{{img}}'>
+                <br><br>
+            {% endfor %}
         </div>
     </profile>
     {% endfor %}
 </div>
+<!--
 <div>
-    <h3 style="text-align: left;">Post a status message for {{profile.first_name}} {{profile.last_name}}</h3>
+    <h3 style="float: left;">Post a status message for {{profile.first_name}} {{profile.last_name}}</h3><br>
     <form action="{% url 'create_status' profile.pk %}" method="POST">
         {% csrf_token %}
         <table>
@@ -33,4 +38,6 @@
         <input type="submit" name="submit" value="Create Status">
     </form>
 </div>
+-->
+
 {% endblock %}

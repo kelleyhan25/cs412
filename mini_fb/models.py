@@ -43,4 +43,35 @@ class StatusMessage(models.Model):
         '''Returns a string representation of the StatusMessage'''
         return f'{self.message}'
     
+    def get_images(self):
+        '''Return all of the status messages on this profile.'''
 
+        #status_images = StatusImage.objects.filter(status_message=self)
+        images = Image.objects.filter(statusimage__status_message=self)
+        return images
+    
+
+class Image(models.Model):
+    '''Encapsulates the idea of an image file '''
+
+    # data atrributes of an Image 
+    profile = models.ForeignKey("Profile", on_delete=models.CASCADE)
+    image_file = models.ImageField(blank=True)
+    timestamp = models.DateTimeField(auto_now=True)
+    caption = models.TextField(blank=True)
+
+    def __str__(self):
+        '''Returns a string representation of the Image'''
+        return f'{self.caption}'
+
+
+class StatusImage(models.Model):
+    '''encapsulates the idea of a status image'''
+
+    # data attributes of a StatusImage 
+    image = models.ForeignKey("Image", on_delete=models.CASCADE)
+    status_message = models.ForeignKey("StatusMessage", on_delete=models.CASCADE)
+
+    def __str__(self):
+        '''Returns a string representation of the StatusImage'''
+        return f'{self.status_message}'
