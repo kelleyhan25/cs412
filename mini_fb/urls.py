@@ -12,4 +12,5 @@ urlpatterns = [
     path('profile/<int:pk>', ShowProfilePageView.as_view(), name='profile'), #Show singular profile
     path('create_profile', CreateProfileView.as_view(), name="create_profile"), 
     path('profile/<int:pk>/create_status', CreateStatusView.as_view(), name="create_status"),
+    path('profile/<int:pk>/update', UpdateProfileView.as_view(), name="update_profile"), 
 ]
