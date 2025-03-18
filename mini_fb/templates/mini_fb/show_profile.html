@@ -3,10 +3,11 @@
 <!--HTML template file for individual profile viewing-->
 {% extends 'mini_fb/base.html' %}
 {% block content %}
+&nbsp;&nbsp;&nbsp;<li><a href="{% url 'news_feed' profile.pk %}" style="border: 4px; padding: 4px; margin: 1px; border-radius: 8px; background-color:rgb(80, 80, 255); width: 115px; font-weight: bold; display: inline-flex;">News Feed</a></li>
 <table>
     <tr>
         <td><img class="profile-pic" src="{{profile.profile_image_url}}" alt="{{profile.profile_image_url}}"></td>
-        <td class="info"><h4>{{profile.first_name}} {{profile.last_name}}</h4>Lives in: {{profile.city}} <br><br>
+        <td class="info"><h4>{{profile.first_name}} {{profile.last_name}} </h4>Lives in: {{profile.city}} <br><br>
             Email address: {{profile.email_address}} <br> <br>
             <a href="{% url 'create_status' profile.pk %}" style="border: 4px; padding: 4px; margin: 1px; border-radius: 8px; background-color:rgb(80, 80, 255); width: 167px; font-weight: bold; display: inline-flex;">Create Status</a> 
             <a href="{% url 'update_profile' profile.pk %}" style="border: 4px; padding: 4px; margin: 1px; border-radius: 8px; background-color:rgb(80, 80, 255); width: 174px; font-weight: bold;display: inline-flex;">Update Profile</a>
@@ -51,6 +52,7 @@
         {% endfor %}
         
     </table>
+    <a href="{% url 'friend_suggestions' profile.pk %}" style="border: 4px; padding: 4px; margin: 1px; border-radius: 8px; background-color:rgb(80, 80, 255); width: 153px; font-weight: bold;display: inline-flex;">Friend Suggestions</a>
 </div>
 
 {% endblock %}

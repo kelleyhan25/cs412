@@ -140,4 +140,17 @@ class ShowFriendSuggestionsView(DetailView):
         context['profile'] = profile
         context['friend_suggestions'] = profile.get_friend_suggestions()
         return context
-    
+
+
+class ShowNewsFeedView(DetailView):
+    '''a view to display all status messages of a user's friends'''
+    model = Profile
+    template_name = 'mini_fb/news_feed.html'
+    context_object_name = 'profile'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        profile = self.object
+        news_feed = profile.get_news_feed()
+        print(news_feed)
+        context['news_feed'] = news_feed
+        return context

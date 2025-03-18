@@ -1,0 +1,38 @@
+<!-- mini_fb/templates/mini_fb/news_feed.html -->
+{% extends 'mini_fb/base.html' %}
+
+{% block content %}
+<h2>{{profile.first_name}}'s News Feed</h2>
+<a href="{% url 'profile' profile.pk %}" style="border: 4px; padding: 4px; margin: 1px; border-radius: 8px; background-color:rgb(80, 80, 255); width: 187px; font-weight: bold;display: inline-flex;">Go Back To Profile Page</a><br><br>
+<div style="background-color: rgb(178, 188, 241); ">
+    <div>
+        {% if news_feed %}
+            {% for status_message in news_feed %}
+            <div style="display: flex; align-items: flex-start; padding:10px; border-left:5px;">
+                {% if status_message.profile.profile_image_url %}
+                <img src="{{status_message.profile.profile_image_url}}" 
+                     alt="{{status_message.profile.profile_image_url}}" 
+                     style="border-radius: 50%; top:10px; left:10px; width:55px; height:55px; border:none">
+                {% endif %}
+                <p style="font-weight: bold;">{{status_message.profile.first_name}} {{status_message.profile.last_name}}</p> &nbsp;<p style="font-style: italic;">{{status_message.time_stamp}}</p>
+            </div>
+            
+            
+            <p style="display:flex; align-content: flex-start; padding:10px; border-left:5px; margin-left: 85px;">{{status_message.message}}</p>
+            {% for img in status_message.get_images %}
+                    <img style="margin-left:100px; border:none" src='{{img.image_file.url}}' 
+                        alt='{{img}}'
+                        style="margin:0px; max-width: 100%;">
+                    <br><br>
+                {% endfor %}
+            <hr>
+        
+            {% endfor %}
+           
+        {% else %}
+            <p>No status messages.</p>
+        {% endif %}
+    </div>
+</div>
+<br><br>
+{% endblock %}

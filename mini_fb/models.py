@@ -55,7 +55,9 @@ class Profile(models.Model):
     def get_friend_suggestions(self):
         '''returns a list of possible friends for a profile.'''
         current_friends = self.get_friends()
-        print("current friends: ", current_friends)
+        if not current_friends: 
+            return []
+        #print("current friends: ", current_friends)
         friend_suggestions = []
         excluded_profiles = [self]
     
@@ -63,14 +65,22 @@ class Profile(models.Model):
 
         for friend in current_friends: 
             friends_of_friend = friend.get_friends()
-        print("friends of friends", friends_of_friend)
+        #print("friends of friends", friends_of_friend)
         
         for possible_friend in friends_of_friend:
             if possible_friend not in excluded_profiles:
                 friend_suggestions.append(possible_friend)
                 excluded_profiles.append(possible_friend)
-        print("friend suggestions", friend_suggestions)
+        #print("friend suggestions", friend_suggestions)
         return friend_suggestions
+    
+    def get_news_feed(self):
+        '''shows status messages for each of the friends of a given user'''
+        my_friends = self.get_friends()
+        all_messages = StatusMessage.objects.filter(profile__in=my_friends).order_by('-time_stamp')
+        print(all_messages)
+        return all_messages
+
  
 class StatusMessage(models.Model):
     '''Encapsulates the Facebook status message.'''
