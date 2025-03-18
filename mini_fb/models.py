@@ -23,13 +23,23 @@ class Profile(models.Model):
     
     def get_status_messages(self):
         '''Return all of the status messages on this profile.'''
-
         messages = StatusMessage.objects.filter(profile=self)
         return messages
     
     def get_absolute_url(self):
         '''return the URL to display show an instance of the profile'''
         return reverse('profile', kwargs={'pk':self.pk})
+    
+    def get_friends(self):
+        '''return all friends of this profile'''
+        friends1 = Friend.objects.filter(profile1=self) 
+        friends2 = Friend.objects.filter(profile2=self)
+        friends_list = []
+        for friend in friends1:
+            friends_list.append(friend.profile2)
+        for friend2 in friends2: 
+            friends_list.append(friend2.profile1)
+        return friends_list 
 
 class StatusMessage(models.Model):
     '''Encapsulates the Facebook status message.'''
@@ -75,3 +85,16 @@ class StatusImage(models.Model):
     def __str__(self):
         '''Returns a string representation of the StatusImage'''
         return f'{self.status_message}'
+
+
+class Friend(models.Model):
+    '''Encapsulate the idea of a Friend of a Profile.'''
+
+    #data attributes of a Friend: 
+    profile1 = models.ForeignKey("Profile", on_delete=models.CASCADE, related_name="profile1")
+    profile2 = models.ForeignKey("Profile", on_delete=models.CASCADE, related_name="profile2")
+    timestamp = models.DateTimeField(auto_now="True")
+
+    def __str__(self):
+        '''Returns a string representation of the Friends'''
+        return f'{self.profile1} & {self.profile2}'
