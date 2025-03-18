@@ -40,7 +40,38 @@ class Profile(models.Model):
         for friend2 in friends2: 
             friends_list.append(friend2.profile1)
         return friends_list 
+    
+    def add_friend(self, other):
+        '''check if friends exist and add if they don't. '''
+        if self == other: 
+            return 
+        friend_exists1 = Friend.objects.filter(profile1=self, profile2=other)
+        friend_exists2 = Friend.objects.filter(profile1=other, profile2=self)
 
+        if (len(friend_exists1) == 0 and len(friend_exists2) == 0):
+            friend = Friend(profile1=self, profile2=other)
+            friend.save()
+
+    def get_friend_suggestions(self):
+        '''returns a list of possible friends for a profile.'''
+        current_friends = self.get_friends()
+        print("current friends: ", current_friends)
+        friend_suggestions = []
+        excluded_profiles = [self]
+    
+        excluded_profiles.extend(current_friends)
+
+        for friend in current_friends: 
+            friends_of_friend = friend.get_friends()
+        print("friends of friends", friends_of_friend)
+        
+        for possible_friend in friends_of_friend:
+            if possible_friend not in excluded_profiles:
+                friend_suggestions.append(possible_friend)
+                excluded_profiles.append(possible_friend)
+        print("friend suggestions", friend_suggestions)
+        return friend_suggestions
+ 
 class StatusMessage(models.Model):
     '''Encapsulates the Facebook status message.'''
 

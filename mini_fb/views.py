@@ -2,9 +2,9 @@
 # Author: Kelley Han (kelhan@bu.edu), 2/18/25
 # Description: includes the functions for views to show all profiles and show individual profiles 
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Profile, StatusMessage, StatusImage, Image
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
 from .forms import CreateProfileForm, CreateStatusMessageForm, UpdateProfileForm, UpdateStatusForm
 from django.urls import reverse
 # Create your views here.
@@ -116,4 +116,28 @@ class UpdateStatusMessageView(UpdateView):
         status_message = StatusMessage.objects.get(pk=pk)
         profile = status_message.profile
         return reverse('profile', kwargs={'pk':profile.pk})
+    
+class AddFriendView(View):
+    '''a view to add a friend to a profile.'''
+    def dispatch(self, request, *args, **kwargs):
+        pk = self.kwargs['pk']
+        other_pk = self.kwargs['other_pk']
+
+        profile = Profile.objects.get(pk=pk)
+        friendProfile = Profile.objects.get(pk=other_pk)
+        profile.add_friend(friendProfile)
+        return redirect(reverse('profile', kwargs={'pk':profile.pk}))
+    
+class ShowFriendSuggestionsView(DetailView):
+    '''a view to show friend suggestions page'''
+    model = Profile
+    template_name = 'mini_fb/friend_suggestions.html'
+    context_object_name = 'profile'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        profile = self.object
+        context['profile'] = profile
+        context['friend_suggestions'] = profile.get_friend_suggestions()
+        return context
     

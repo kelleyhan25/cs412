@@ -32,12 +32,12 @@
 </div>
 <div>
     <h2 style="text-align: left;">{{profile.first_name}}'s Friends</h2>
-    <table class="friends">
+    <table>
         {% for p in profile.get_friends %}
                 {% if forloop.first or forloop.counter0|divisibleby:3 %}
                 <tr>
                     {% endif %}
-                    <td>
+                    <td style="margin-left:0px;">
                         {% if p.profile_image_url %}
                         <a href="{% url 'profile' p.pk %}">
                             <img src="{{p.profile_image_url}}" alt="{{p.profile_image_url}}">

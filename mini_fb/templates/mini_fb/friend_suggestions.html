@@ -1,0 +1,27 @@
+<!-- mini_fb/templates/mini_fb/friend_suggestions.html -->
+{% extends 'mini_fb/base.html' %}
+
+{% block content %}
+
+<h2>People {{profile.first_name}} {{profile.last_name}} may know:</h2>
+<table>
+    {% for p in friend_suggestions %}
+                {% if forloop.first or forloop.counter0|divisibleby:3 %}
+                <tr>
+                    {% endif %}
+                    <td style="margin-left:0px;">
+                        {% if p.profile_image_url %}
+                        <li style="margin-left: 130px;"><a href="{% url 'add_friend' pk=profile.pk other_pk=p.pk %}" style="border: 4px; padding: 4px; margin: 1px; border-radius: 8px; background-color:rgb(80, 80, 255); width: 115px; height:18px; font-weight: bold;display:inline-flex">Add Friend</a></li>
+                        <a href="{% url 'profile' p.pk %}">
+                            <img src="{{p.profile_image_url}}" alt="{{p.profile_image_url}}">
+                        </a>
+                        <p>{{p.first_name}} {{p.last_name}}</p>
+                        {% endif %}
+                    </td> 
+                    {% if forloop.last or forloop.counter0|add:1|divisibleby:3 %}
+                    </tr> 
+                    {% endif %}
+        {% endfor %}
+</table>
+
+{% endblock %}
