@@ -14,11 +14,26 @@
                 <ul>
                     <li><a href="{% url 'show_all_profiles' %}">Show All Profiles</a></li>
                     <li><a href="{% url 'create_profile' %}">Create Profile</a></li>
+                    {% if request.user.is_authenticated %}
+                    <li>
+                        <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <input type="submit" value="Logout" style="border:none; background:none; cursor:pointer; font-size:20px;color:black; font-family: Helvetica;display: block;padding: 10px 15px;font-weight: bold;">
+                        </form>
+                    </li>
+                    {% else %}
+                    <li><a href="{% url 'login' %}">Log in</a></li>
+                    {% endif %}
                 </ul>
                 <br>
+               
             </nav>
         </header>
-        
+        {% if request.user.is_authenticated %}
+        Logged in user: {{request.user}}
+        {% else %}
+        Not logged in.
+        {% endif %}
         {% block content %}
         {% endblock %}
     </body>
