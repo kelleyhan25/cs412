@@ -30,9 +30,9 @@
             </nav>
         </header>
         {% if request.user.is_authenticated %}
-        Logged in user: {{request.user}}
+        <h2>Logged in user: {{request.user}}</h2>
         {% else %}
-        Not logged in.
+        <h2>Not logged in.</h2>
         {% endif %}
         {% block content %}
         {% endblock %}

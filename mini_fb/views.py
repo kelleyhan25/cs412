@@ -8,6 +8,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from .forms import CreateProfileForm, CreateStatusMessageForm, UpdateProfileForm, UpdateStatusForm
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
 
 class ShowAllProfilesView(ListView):
@@ -32,6 +33,19 @@ class CreateProfileView(CreateView):
     '''subclass of createview to display the form for creating a profile'''
     form_class = CreateProfileForm
     template_name = 'mini_fb/create_profile_form.html'
+
+    def get_context_data(self, **kwargs):
+        context= super().get_context_data(**kwargs)
+        context['usercreationform'] = UserCreationForm()
+        return context 
+    
+    def form_valid(self, form):
+        '''reconstruct usercreationform instance from the self.request.POST data'''
+        user_form = UserCreationForm(self.request.POST)
+        user = user_form.save() 
+        form.instance.user = user
+
+        return super().form_valid(form)
     
 class CreateStatusView(LoginRequiredMixin, CreateView):
     '''subclass of createview to display the form for creating a status message'''
@@ -86,9 +100,7 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
         '''method for object lookup in URL w/out pk'''
         return Profile.objects.get(user=self.request.user)
 
-    def get_success_url(self):
-        pk = self.kwargs['pk']
-        return reverse('profile', kwargs={'pk':pk})
+    
     def get_login_url(self):
         return reverse('login')
     def form_valid(self, form):
@@ -100,6 +112,9 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
         user = self.request.user 
         context['user'] = user 
         return context 
+    def get_success_url(self):
+        #pk = self.kwargs['pk']
+        return reverse('profile', kwargs={'pk':self.object.pk})
     
 class DeleteStatusMessageView(LoginRequiredMixin, DeleteView):
     '''a view to delete a status message and remove it from the database.'''
