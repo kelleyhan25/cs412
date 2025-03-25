@@ -1,0 +1,11 @@
+<!-- mini_fb/templates/logged_out.html -->
+{% extends 'mini_fb/base.html' %}
+
+{% block content %}
+
+
+<h2>Logged Out</h2>
+<a href="{% url 'login' %}" style="border: 4px; padding: 4px; margin: 1px; border-radius: 8px; background-color:rgb(80, 80, 255); width: 105px; font-weight: bold; display: inline-flex;">Log Back In?</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="{% url 'show_all_profiles' %}" style="border: 4px; padding: 4px; margin: 1px; border-radius: 8px; background-color:rgb(80, 80, 255); width: 135px; font-weight: bold; display: inline-flex;">Stay Logged Out</a>
+
+{% endblock %}
