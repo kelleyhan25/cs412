@@ -38,9 +38,14 @@ class CreateStatusView(LoginRequiredMixin, CreateView):
     form_class = CreateStatusMessageForm
     template_name = 'mini_fb/create_status_form.html'
 
+    def get_object(self):
+        '''method for object lookup in URL w/out pk'''
+        return Profile.objects.get(user=self.request.user)
+
     def form_valid(self, form):
-        pk = self.kwargs['pk']
-        profile = Profile.objects.get(pk=pk)
+        #pk = self.kwargs['pk']
+        #profile = Profile.objects.get(pk=pk)
+        profile = self.get_object()
         form.instance.profile = profile
         sm = form.save()
         files = self.request.FILES.getlist('files')
@@ -57,9 +62,9 @@ class CreateStatusView(LoginRequiredMixin, CreateView):
     
     def get_context_data(self):
         context = super().get_context_data()
-        pk = self.kwargs['pk']
-        profile = Profile.objects.get(pk=pk)
-        context['profile'] = profile
+        #pk = self.kwargs['pk']
+        #profile = Profile.objects.get(pk=pk)
+        context['profile'] = self.get_object()
         user = self.request.user
         context['user'] = user
         return context
@@ -77,6 +82,9 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
     model = Profile
     form_class = UpdateProfileForm
     template_name = 'mini_fb/update_profile_form.html'
+    def get_object(self):
+        '''method for object lookup in URL w/out pk'''
+        return Profile.objects.get(user=self.request.user)
 
     def get_success_url(self):
         pk = self.kwargs['pk']
@@ -157,11 +165,16 @@ class UpdateStatusMessageView(LoginRequiredMixin, UpdateView):
     
 class AddFriendView(LoginRequiredMixin, View):
     '''a view to add a friend to a profile.'''
+    def get_object(self):
+        '''method for object lookup in URL w/out pk'''
+        return Profile.objects.get(user=self.request.user)
+    
     def dispatch(self, request, *args, **kwargs):
-        pk = self.kwargs['pk']
+        #pk = self.kwargs['pk']
         other_pk = self.kwargs['other_pk']
 
-        profile = Profile.objects.get(pk=pk)
+        #profile = Profile.objects.get(pk=pk)
+        profile = self.get_object()
         friendProfile = Profile.objects.get(pk=other_pk)
         profile.add_friend(friendProfile)
         return redirect(reverse('profile', kwargs={'pk':profile.pk}))
@@ -185,10 +198,13 @@ class ShowFriendSuggestionsView(DetailView):
     model = Profile
     template_name = 'mini_fb/friend_suggestions.html'
     context_object_name = 'profile'
+    def get_object(self):
+        '''method for object lookup in URL w/out pk'''
+        return Profile.objects.get(user=self.request.user)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        profile = self.object
+        profile = self.get_object()
         context['profile'] = profile
         context['friend_suggestions'] = profile.get_friend_suggestions()
         return context
@@ -199,9 +215,12 @@ class ShowNewsFeedView(LoginRequiredMixin, DetailView):
     model = Profile
     template_name = 'mini_fb/news_feed.html'
     context_object_name = 'profile'
+    def get_object(self):
+        '''method for object lookup in URL w/out pk'''
+        return Profile.objects.get(user=self.request.user)
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        profile = self.object
+        profile = self.get_object()
         news_feed = profile.get_news_feed()
         print(news_feed)
         context['news_feed'] = news_feed

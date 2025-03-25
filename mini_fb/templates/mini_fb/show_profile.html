@@ -4,7 +4,7 @@
 {% extends 'mini_fb/base.html' %}
 {% block content %}
 {% if request.user.is_authenticated and request.user == profile.user %}
-&nbsp;&nbsp;&nbsp;<li><a href="{% url 'news_feed' profile.pk %}" style="border: 4px; padding: 4px; margin: 1px; border-radius: 8px; background-color:rgb(80, 80, 255); width: 115px; font-weight: bold; display: inline-flex;">News Feed</a></li>
+&nbsp;&nbsp;&nbsp;<li><a href="{% url 'news_feed' %}" style="border: 4px; padding: 4px; margin: 1px; border-radius: 8px; background-color:rgb(80, 80, 255); width: 115px; font-weight: bold; display: inline-flex;">News Feed</a></li>
 {% endif %}
 <table>
     <tr>
@@ -12,9 +12,9 @@
         <td class="info"><h4>{{profile.first_name}} {{profile.last_name}} </h4>Lives in: {{profile.city}} <br><br>
             Email address: {{profile.email_address}} <br> <br>
             {% if request.user.is_authenticated and request.user == profile.user %}
-            <a href="{% url 'create_status' profile.pk %}" style="border: 4px; padding: 4px; margin: 1px; border-radius: 8px; background-color:rgb(80, 80, 255); width: 167px; font-weight: bold; display: inline-flex;">Create Status</a> 
+            <a href="{% url 'create_status' %}" style="border: 4px; padding: 4px; margin: 1px; border-radius: 8px; background-color:rgb(80, 80, 255); width: 167px; font-weight: bold; display: inline-flex;">Create Status</a> 
             
-            <a href="{% url 'update_profile' profile.pk %}" style="border: 4px; padding: 4px; margin: 1px; border-radius: 8px; background-color:rgb(80, 80, 255); width: 174px; font-weight: bold;display: inline-flex;">Update Profile</a>
+            <a href="{% url 'update_profile' %}" style="border: 4px; padding: 4px; margin: 1px; border-radius: 8px; background-color:rgb(80, 80, 255); width: 174px; font-weight: bold;display: inline-flex;">Update Profile</a>
             {% endif %}
         </td>
     </tr>
@@ -60,7 +60,7 @@
         
     </table>
     {% if request.user.is_authenticated and request.user == profile.user %}
-    <a href="{% url 'friend_suggestions' profile.pk %}" style="border: 4px; padding: 4px; margin: 1px; border-radius: 8px; background-color:rgb(80, 80, 255); width: 153px; font-weight: bold;display: inline-flex;">Friend Suggestions</a>
+    <a href="{% url 'friend_suggestions' %}" style="border: 4px; padding: 4px; margin: 1px; border-radius: 8px; background-color:rgb(80, 80, 255); width: 153px; font-weight: bold;display: inline-flex;">Friend Suggestions</a>
     {% endif %}
 </div>
 
