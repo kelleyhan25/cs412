@@ -1,12 +1,16 @@
 <!-- voter_analytics/templates/voter_analytics/voters.html -->
+  <!--Kelley Han, kelhan@bu.edu-->
+  <!--This file shows all voter information-->
 {% extends 'voter_analytics/base.html' %}
 
 {% block content %}
 
 <div class="container">
-    <h1>Showing All Voters</h1>
+    
     <div class="row">
+        {% url 'voters_list' as form_action_url %}
         {% include "voter_analytics/search.html" %}
+        <br><br>
         {% if is_paginated %}
         <ul class="pagination">
             {% if page_obj.has_previous %}

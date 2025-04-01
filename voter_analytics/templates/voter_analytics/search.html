@@ -1,8 +1,9 @@
 <!--voter_analytics/templates/voter_analytics/search.html-->
-
+ <!--Kelley Han, kelhan@bu.edu-->
+ <!--This file includes the search form for filtering results -->
 <h3>Filter Voter Results</h3>
 <table>
-    <form action="{% url 'voters_list' %}">
+    <form action="{{ form_action_url }}">
         <tr>
             <th>Party Affiliation:</th>
             <td><select name="party" id="party">
@@ -10,6 +11,27 @@
                 <option value="D ">Democrat</option>
                 <option value="R ">Republican</option>
                 <option value="U ">Unenrolled</option>
+                <option value="J ">Justice</option>
+                <option value="A ">American</option>
+                <option value="CC ">Constitutional Conservative</option>
+                <option value="X ">No Party Affiliation</option>
+                <option value="L ">Libertarian</option>
+                <option value="Q ">Unknown/Unaffiliated</option>
+                <option value="S ">Socialist</option>
+                <option value="FF">Freedom First</option>
+                <option value="G ">Green</option>
+                <option value="HH ">Heritage</option>
+                <option value="T ">Taxpayers</option>
+                <option value="AA ">America First</option>
+                <option value="GG ">Grassroots</option>
+                <option value="O ">Other/Independent</option>
+                <option value="P ">Progressive</option>
+                <option value="E ">Ecology</option>
+                <option value="V ">Veterans</option>
+                <option value="H ">Humane</option>
+                <option value="Y ">Youth</option>
+                <option value="W ">Working Families</option>
+                <option value="K ">Constitution</option>
             </select></td>
         </tr>
         <tr>

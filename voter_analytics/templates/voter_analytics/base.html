@@ -1,4 +1,6 @@
 <!-- voter_analytics/templates/voter_analytics/base.html -->
+<!-- Kelley Han, kelhan@bu.edu-->
+<!--This file contains the base styling and nav links that all other html files extend from -->
 {% load static %}
 <html>
     <head>
@@ -11,6 +13,7 @@
             <nav>
                 <ul>
                     <li><a href="{% url 'voters' %}">Home</a></li>
+                    <li><a href="{% url 'graphs' %}">View Distribution Graphs</a></li>
                 </ul>
 
             </nav>

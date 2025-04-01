@@ -1,0 +1,25 @@
+<!-- voter_analytics/templates/voter_analytics/graphs.html -->
+ <!--Kelley Han, kelhan@bu.edu-->
+ <!--This file includes the graphics for the graphs from the view-->
+{% extends 'voter_analytics/base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        {% url 'graphs' as form_action_url %}
+        {% include "voter_analytics/search.html" %}
+        <p>
+            {{graph_div_year|safe}}
+        </p>
+        <p>
+            {{graph_div_party|safe}}
+        </p>
+        <p>
+            {{graph_div_elect|safe}}
+        </p>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,3 +1,6 @@
+# voter_analytics/models.py 
+# Kelley Han kelhan@bu.edu
+# this includes the model definition of a Voter and all its attributes, and the function to load data from the CSV file
 from django.db import models
 
 # Create your models here.
@@ -24,7 +27,7 @@ class Voter(models.Model):
     def __str__(self):
         '''return a string representation of this model instance.'''
         return f'{self.first_name} {self.last_name}'
-
+    
 
 def load_data(): 
     '''function to load data records from the newton_voters csv file into Django model instances.'''
