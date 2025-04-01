@@ -27,8 +27,7 @@
         <table>
             <tr>
                 <th></th>
-                <th>First Name</th>
-                <th>Last Name</th>
+                <th>Name</th>
                 <th>Street Address</th>
                 <th>Date of Birth</th>
                 <th>Party Affiliation</th>
@@ -38,9 +37,16 @@
             {% for v in voters %} 
             <tr>
                 <td>{{forloop.counter}}.</td>
-                <td>{{v.first_name}}</td>
-                <td>{{v.last_name}}</td>
-                <td>{{v.street_num}} {{v.street_name}} {{v.apt_num}} Newton, MA {{v.zip_code}}</td>
+                <td><a href="{% url 'voter_detail' v.pk %}">
+                    {{v.first_name}} {{v.last_name}}</a></td>
+               
+                {% if v.apt_num is None or v.apt_num == "" %}
+                    <td><a href="https://www.google.com/maps/search/?api=1&query={{v.street_num}}+{{v.street_name}},+Newton,+MA+{{v.zip_code}}">
+                        {{v.street_num}} {{v.street_name}},&nbsp; Newton, MA {{v.zip_code}}</a></td>
+                {% else %}
+                    <td><a href="https://www.google.com/maps/search/?api=1&query={{v.street_num}}+{{v.street_name}}+{{v.apt_num}},+Newton,+MA+{{v.zip_code}}">
+                        {{v.street_num}} {{v.street_name}}, &nbsp;Apt {{v.apt_num}},&nbsp; Newton, MA {{v.zip_code}}</a></td>
+                {% endif %}
                 <td>{{v.dob}}</td>
                 <td>{{v.party}}</td>
                 <td>{{v.voter_score}}</td>

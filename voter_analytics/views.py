@@ -17,8 +17,14 @@ class VotersListView(ListView):
     context_object_name = 'voters'
     paginate_by = 100
 
+    def get_context_data(self, **kwargs):
+        context =  super().get_context_data(**kwargs)
+        context['birth_year_range'] = range(1910, 2026)
+        
+        return context
+
     def get_queryset(self):
-        voters = super().get_queryset().order_by('first_name')
+        voters = super().get_queryset()
 
         if 'party' in self.request.GET: 
             party  = self.request.GET['party']
@@ -28,7 +34,7 @@ class VotersListView(ListView):
             voter_score = self.request.GET['voter_score']
             if voter_score:
                 voters = voters.filter(voter_score=voter_score)
-        elections = ['v20state', 'v21town', 'v21primary', 'v22general', 'v23town']
+        
        
         if 'v20state' in self.request.GET:
             v20state = self.request.GET['v20state']
@@ -54,7 +60,23 @@ class VotersListView(ListView):
             v23town = self.request.GET['v23town']
             if v23town:
                 voters = voters.filter(v23town=True)
+        
+        if 'min_birth_year' in self.request.GET: 
+            min_birth_year = self.request.GET['min_birth_year']
+            if min_birth_year:
+                voters = voters.filter(dob__gte=min_birth_year)
+        
+        if 'max_birth_year' in self.request.GET: 
+            max_birth_year = self.request.GET['max_birth_year']
+            if max_birth_year: 
+                voters = voters.filter(dob__lte=max_birth_year)
            
                
                 
-        return voters     
+        return voters.order_by('dob')    
+
+class VoterDetailView(DetailView):
+    '''view to show detail page of one voter'''
+    template_name = 'voter_analytics/voter_detail.html'
+    model = Voter 
+    context_object_name = 'd'

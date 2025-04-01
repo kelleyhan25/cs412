@@ -9,9 +9,9 @@ class Voter(models.Model):
     street_num = models.IntegerField()
     street_name = models.TextField()
     apt_num = models.TextField()
-    zip_code = models.IntegerField()
-    dob = models.DateField()
-    dor = models.DateField()
+    zip_code = models.TextField()
+    dob = models.TextField()
+    dor = models.TextField()
     party = models.CharField(max_length=1)
     precinct_num = models.TextField()
     v20state = models.BooleanField()
@@ -34,13 +34,17 @@ def load_data():
     f = open(filename)
     f.readline()
 
+   
+    
     for line in f: 
+    
         fields = line.split(',')
-        
+       
         def convert_to_boolean(value):
             '''converts the "TRUE" and "FALSE" values to a Boolean.'''
             return value == "TRUE"
         
+
 
         try: 
             

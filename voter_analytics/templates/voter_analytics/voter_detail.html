@@ -1,0 +1,50 @@
+<!-- voter_analytics/templates/voter_analytics/voter_detail.html -->
+{% extends 'voter_analytics/base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <h1>Showing information for {{d.first_name}} {{d.last_name}}</h1>
+    <table>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Date of Birth</th>
+            <th>Voter Registration Date</th>
+            <th>2020 State Election</th>
+            <th>2021 Town Election</th>
+            <th>2021 Primary Election</th>
+            <th>2022 General Election</th>
+            <th>2023 Town Election</th>
+        </tr>
+        <tr>
+            <td>{{d.first_name}}</td>
+            <td>{{d.last_name}}</td>
+            <td>{{d.dob}}</td>
+            <td>{{d.dor}}</td>
+            <td>{{d.v20state}}</td>
+            <td>{{d.v21town}}</td>
+            <td>{{d.v21primary}}</td>
+            <td>{{d.v22general}}</td>
+            <td>{{d.v23town}}</td>
+        </tr>
+    </table>
+
+    <h2>Address (Click for Google Maps)</h2>
+    {% if d.apt_num is None or d.apt_num == "" %}
+        <p><a href="https://www.google.com/maps/search/?api=1&query={{d.street_num}}+{{d.street_name}},+Newton,+MA+{{d.zip_code}}">
+        {{d.street_num}} {{d.street_name}},&nbsp; Newton, MA {{d.zip_code}}</a></p>
+    {% else %}
+        <p><a href="https://www.google.com/maps/search/?api=1&query={{d.street_num}}+{{d.street_name}}+{{d.apt_num}},+Newton,+MA+{{d.zip_code}}">
+        {{d.street_num}} {{d.street_name}}, &nbsp;Apt {{d.apt_num}},&nbsp; Newton, MA {{d.zip_code}}</a></p>
+    {% endif %}
+
+    
+
+</div>
+
+
+
+
+
+{% endblock %}
