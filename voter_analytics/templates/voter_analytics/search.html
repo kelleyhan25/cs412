@@ -1,0 +1,51 @@
+<!--voter_analytics/templates/voter_analytics/search.html-->
+
+<h3>Filter Voter Results</h3>
+<table>
+    <form action="{% url 'voters_list' %}">
+        <tr>
+            <th>Party Affiliation:</th>
+            <td><select name="party" id="party">
+                <option value="">All</option>
+                <option value="D ">Democrat</option>
+                <option value="R ">Republican</option>
+                <option value="U ">Unenrolled</option>
+            </select></td>
+        </tr>
+        
+        <tr>
+            <th>Voter Score</th>
+            <td><select name="voter_score" id="voter_score">
+                <option value="">Any Score</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select></td>
+        </tr>
+        <tr>
+            <th>Election</th>
+            <td>
+                <input type="checkbox" id="v20state" name="v20state" value="v20state">
+                <label for="v20state">2020 State Election</label>
+
+                <input type="checkbox" id="v21town" name="v21town" value="v21town">
+                <label for="v21town">2021 Town Election</label>
+
+                <input type="checkbox" id="v21primary" name="v21primary" value="v21primary">
+                <label for="v21primary"> 2021 Primary Election</label>
+
+                <input type="checkbox" id="v22general" name="v22general" value="v22general">
+                <label for="v22general">2022 General Election</label>
+
+                <input type="checkbox" id="v23town" name="v23town" value="v23town">
+                <label for="v23town">2023 Town Election</label>
+            </td>  
+        </tr>
+        <tr>
+            <td><input type="submit"></td>
+            <td></td>
+        </tr>
+    </form>
+</table>

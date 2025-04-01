@@ -1,0 +1,58 @@
+<!-- voter_analytics/templates/voter_analytics/voters.html -->
+{% extends 'voter_analytics/base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <h1>Showing All Voters</h1>
+    <div class="row">
+        {% include "voter_analytics/search.html" %}
+        {% if is_paginated %}
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+            <li>
+                <span><a href="?page={{ page_obj.previous_page_number }}">Previous</a></span>
+            </li>
+            {% endif %}
+                <li class="">
+                    <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</span>
+                </li>
+            {% if page_obj.has_next %}
+                <li>
+                    <span><a href="?page={{ page_obj.next_page_number }}">Next</a></span>
+                </li>
+            {% endif %}
+        </ul>
+        {% endif %}
+        <table>
+            <tr>
+                <th></th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Street Address</th>
+                <th>Date of Birth</th>
+                <th>Party Affiliation</th>
+                <th>Voter Score</th>
+
+            </tr>
+            {% for v in voters %} 
+            <tr>
+                <td>{{forloop.counter}}.</td>
+                <td>{{v.first_name}}</td>
+                <td>{{v.last_name}}</td>
+                <td>{{v.street_num}} {{v.street_name}} {{v.apt_num}} Newton, MA {{v.zip_code}}</td>
+                <td>{{v.dob}}</td>
+                <td>{{v.party}}</td>
+                <td>{{v.voter_score}}</td>
+            </tr>
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+</div>
+
+
+
+{% endblock %}

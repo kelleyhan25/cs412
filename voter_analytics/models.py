@@ -28,6 +28,8 @@ class Voter(models.Model):
 
 def load_data(): 
     '''function to load data records from the newton_voters csv file into Django model instances.'''
+    Voter.objects.all().delete()
+    
     filename = '/Users/khan/Desktop/django/newton_voters.csv'
     f = open(filename)
     f.readline()
