@@ -1,0 +1,13 @@
+<!-- project/templates/project.html -->
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<h1>Login</h1>
+<form method="post" action="{% url 'login' %}" >
+    {% csrf_token %}
+    {{form}}
+    <input type="hidden" name="next" value="{% url 'home' %}">
+    <input type="submit" value="Login">
+</form>
+{% endblock %}

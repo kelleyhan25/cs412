@@ -1,0 +1,16 @@
+<!--project/templates/project/browse.html-->
+{% extends 'project/base.html' %}
+{% block content %}
+
+<div>
+    {% for b in buckets %} 
+    <table>
+       <tr><strong>{{b.bucket_symbol}}</strong>
+        <p>{{b.bucket_name}}</p>
+       </tr>
+    </table>
+   
+    {% endfor %}
+</div>
+
+{% endblock %}

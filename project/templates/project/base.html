@@ -1,0 +1,41 @@
+<!--project/templates/project.base.html-->
+{% load static %}
+<html>
+    <head>
+        <title>ETF Manager</title>
+        <link rel="stylesheet" href="{% static 'project-styles.css' %}">
+    </head>
+    <body>
+        <header>
+            <h1>ETF Manager</h1>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'browse' %}">Browse ETFs</a></li>
+                    {% if request.user.is_authenticated %}
+                    <li><a href="{}">My Investments</a></li>
+                    {% endif %}
+                    <li><a href="{% url 'companies' %}">Companies</a></li>
+                    {% if request.user.is_authenticated %}
+                    <li><a href="">Account</a></li>
+                    <li><p>Logged In: {{ request.user}}</p></li>
+                    <li>
+                        <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <input type="submit" value="Logout" style="border:none; background:none; cursor:pointer; color:black; font-family: Helvetica;display: block;padding: 10px 15px;font-size:16px;">
+                        </form>
+                    </li>
+                    {% else %}
+                    <li><p>Not logged in.</p></li>
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    {% endif %}
+                    
+                </ul>
+                
+            </nav>
+        </header>
+        {% block content %}
+        {% endblock %}
+    </body>
+</html>
+
