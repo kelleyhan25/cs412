@@ -2,6 +2,53 @@
 # Author : Kelley Han kelhan@bu.edu 4/13/25
 # Description: All of the models necessary for the ETF Manager project 
 from django.db import models
+from django.contrib.auth.models import User
+import yfinance as yf 
+from decimal import Decimal 
+
+def get_stock_price(stock_symbol): 
+    '''returns most current stock price'''
+    stock =  yf.Ticker(stock_symbol)
+    data = stock.history(period="1d")
+    if not data.empty: 
+        price = float(data['Close'].iloc[-1])
+        price = round(price, 2)
+        return price
+    return None
+
+def get_market_cap(stock_symbol):
+    '''returns market cap from yfinance api'''
+    stock = yf.Ticker(stock_symbol)
+    info = stock.info
+    market_cap = info.get('marketCap')
+    if market_cap:
+        mc = float(market_cap) / 1_000_000_000
+        mc = round(mc, 2)
+    return None
+
+def get_percent_change(stock_symbol):
+    '''returns the percent change of stock price from today and yesterday's closing prices'''
+    stock = yf.Ticker(stock_symbol)
+    data = stock.history(period="2d")
+    if len(data) >=2:
+        yesterday = data['Close'].iloc[-2]
+        today = data['Close'].iloc[-1]
+        percent_change = ((today - yesterday) / yesterday) * 100
+        percent_change = round(percent_change, 2)
+        return percent_change
+
+def format_price_change(percentage):
+    '''adds an up arrow or down arrow based on positive/negative percent change'''
+    if percentage is None: 
+        return "N/A"
+    
+    if percentage > 0: 
+        return f"↑ {percentage}%"
+    elif percentage < 0: 
+        return f"↓ {percentage}%"
+    else:
+        return f"0.00%"
+
 
 # Create your models here.
 class Customer(models.Model):
@@ -13,10 +60,16 @@ class Customer(models.Model):
     email = models.EmailField(blank=False)
     dob = models.DateField(blank=False)
     account_balance = models.DecimalField(max_digits=12, decimal_places=2)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         '''return a string representation of this Customer object'''
         return f'{self.first_name} {self.last_name}'
+    
+    def get_investments(self):
+        '''returns all the investments the customer has'''
+        investments = Investment.objects.get(customer=self)
+        return investments 
 
 class Company(models.Model):
     '''encapsulates the idea of a company and its attributes'''
@@ -24,13 +77,32 @@ class Company(models.Model):
     #data attributes of a company 
     company_name = models.TextField(blank=False)
     stock_symbol = models.CharField(max_length=4)
-    market_cap = models.DecimalField(max_digits=10, decimal_places=2)
+    market_cap = models.DecimalField(max_digits=15, decimal_places=2)
     industry = models.TextField(blank=False)
     stock_price = models.DecimalField(max_digits=10, decimal_places=2)
 
+    def update_market_cap(self):
+        '''update the market cap with most recent data pulled from yfinance api'''
+        cap = get_market_cap(self.stock_symbol)
+        if cap is not None: 
+            self.market_cap = Decimal(str(cap))
+            self.save()
+        return self.market_cap
+
+    def update_stock_price(self):
+        '''updates stock price with most recent data from yfinance api'''
+        price = get_stock_price(self.stock_symbol)
+        if price is not None: 
+            self.stock_price = price
+            self.save()
+        return self.stock_price
+    
+   
     def __str__(self):
         '''return a string representation of this Company object'''
         return f'{self.company_name} {self.stock_symbol}'
+    
+  
 
 class Bucket(models.Model):
     '''encapsulates the idea of a Bucket, which is fractions of a company'''

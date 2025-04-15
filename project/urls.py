@@ -8,4 +8,6 @@ urlpatterns = [
     path(r'companies/', views.CompaniesListView.as_view(), name='companies'),
     path(r'login/', auth_views.LoginView.as_view(template_name='project/login.html'), name="login"),
     path(r'logout/', auth_views.LogoutView.as_view(next_page='home'), name="logout"),
+    path(r'account/', views.AccountDetailView.as_view(), name="account"),
+    path(r'my_investments/', views.MyInvestmentsDetailView.as_view(), name="my_investments"),
 ]

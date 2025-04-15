@@ -5,9 +5,14 @@
 <div>
     {% for b in buckets %} 
     <table>
-       <tr><strong>{{b.bucket_symbol}}</strong>
-        <p>{{b.bucket_name}}</p>
-       </tr>
+        <tr>
+            <th>{{b.bucket_symbol}}
+                <p>{{b.bucket_name}}</p>
+                <p>${{b.price_per_share}}</p>
+            </th>
+           
+        </tr>
+       
     </table>
    
     {% endfor %}

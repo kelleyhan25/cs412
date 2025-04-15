@@ -9,19 +9,29 @@
        <tr>
         <th>Name</th>
         <th>Stock Symbol</th>
-        <th>Market Cap</th>
+        <th>Market Cap (Billion)</th>
         <th>Industry</th>
         <th>Price ($)</th>
         <th>% Change</th>
        </tr>
-       {% for c in companies %} 
+       {% for c, price_change in company_price_list %} 
        <tr>
         <th>{{c.company_name}}</th>
         <th>{{c.stock_symbol}}</th>
         <th>{{c.market_cap}}</th>
         <th>{{c.industry}}</th>
         <th>{{c.stock_price}}</th>
-        <th>create formula to find price change</th>
+        <th class="
+            {% if '↑' in price_change %}
+                positive
+            {% elif '↓' in price_change %}
+                negative
+            {% else %}
+                neutral
+            {% endif %}
+            ">
+            {{price_change}}
+        </th>
        </tr>
        {% endfor %}
     </table>

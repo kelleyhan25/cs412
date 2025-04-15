@@ -1,0 +1,26 @@
+<!--project/templates/project/account.html-->
+{% extends 'project/base.html' %}
+{% block content %}
+
+<h3>Account Details</h3>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Date of Birth</th>
+        <th>Account Balance $</th>
+    </tr>
+
+    <tr>
+        <td>{{account.first_name}} {{account.last_name}}</td>
+        <td>{{account.email}}</td>
+        <td>{{account.dob}}</td>
+        <td>${{account.account_balance}}</td>
+    </tr>
+    
+</table>
+
+<h3>Edit Profile:</h3>
+<!--insert form here to edit the profile/user -->
+
+{% endblock %}

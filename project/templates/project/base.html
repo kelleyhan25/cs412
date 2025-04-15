@@ -13,11 +13,11 @@
                     <li><a href="{% url 'home' %}">Home</a></li>
                     <li><a href="{% url 'browse' %}">Browse ETFs</a></li>
                     {% if request.user.is_authenticated %}
-                    <li><a href="{}">My Investments</a></li>
+                    <li><a href="{% url 'my_investments' %}">My Investments</a></li>
                     {% endif %}
                     <li><a href="{% url 'companies' %}">Companies</a></li>
                     {% if request.user.is_authenticated %}
-                    <li><a href="">Account</a></li>
+                    <li><a href="{% url 'account' %}">Account</a></li>
                     <li><p>Logged In: {{ request.user}}</p></li>
                     <li>
                         <form method="post" action="{% url 'logout' %}">
