@@ -1,4 +1,6 @@
-
+# File: models.py 
+# Author : Kelley Han kelhan@bu.edu 4/13/25
+# Description: All of the models necessary for the ETF Manager project 
 from django.db import models
 
 # Create your models here.
