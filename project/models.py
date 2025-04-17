@@ -5,6 +5,8 @@ from django.db import models
 from django.contrib.auth.models import User
 import yfinance as yf 
 from decimal import Decimal 
+from django.utils import timezone 
+from datetime import timedelta
 
 def get_stock_price(stock_symbol): 
     '''returns most current stock price'''
@@ -120,6 +122,7 @@ class Bucket(models.Model):
     total_value = models.DecimalField(max_digits=10, decimal_places=2)
     bucket_symbol = models.CharField(max_length=4)
     price_per_share = models.DecimalField(max_digits=10, decimal_places=2)
+    last_updated = models.DateTimeField(null=True, blank=True)
     
 
     def __str__(self):
@@ -129,6 +132,28 @@ class Bucket(models.Model):
     def company_count(self):
         '''returns the number of companies tied to the bucket'''
         return BucketCompany.objects.filter(bucket=self).count()
+    
+    def update_price_per_share(self):
+        '''returns updated bucket price based on yfinance api on the hour'''
+        if self.last_updated and timezone.now() - self.last_updated < timedelta(hours=1):
+            return self.price_per_share
+        
+        bucket_companies = BucketCompany.objects.filter(bucket=self)
+        weighted_value = 0 
+
+        for b in bucket_companies: 
+            b.company.update_stock_price()
+            stockprice = Decimal(str(b.company.stock_price))
+            percentage = Decimal(str(b.percentage)) / Decimal("100")
+            contribution = stockprice * percentage
+            weighted_value += contribution
+        self.price_per_share = round(weighted_value, 2)
+        self.last_updated = timezone.now()
+        self.save()
+        return self.price_per_share
+    
+    
+    
 
 class BucketCompany(models.Model):
     '''encapsulates the relationship (many to many) with bucket and companies.'''

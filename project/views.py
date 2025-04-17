@@ -8,7 +8,7 @@ from .forms import CreateInvestmentForm, CreateCompanyInvestmentForm, CreateAcco
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User 
 from django.contrib.auth import login 
-
+from django.utils.timesince import timesince
 
 # Create your views here.
 class RegistrationView(CreateView):
@@ -52,6 +52,12 @@ class BrowseETFsView(ListView):
     model = Bucket
     context_object_name = 'buckets'
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        for bucket in queryset:
+            bucket.update_price_per_share()
+        return queryset 
+
 class BuyETFShares(LoginRequiredMixin, DetailView, CreateView):
     '''a view to buy an etf share and add an investment to the database'''
     template_name = 'project/buy_shares.html'
@@ -70,6 +76,11 @@ class BuyETFShares(LoginRequiredMixin, DetailView, CreateView):
 
         bucket_companies = BucketCompany.objects.filter(bucket=bucket)
         context['bucket_companies'] = bucket_companies
+
+        if bucket.last_updated:
+            context['price_last_updated'] = timesince(bucket.last_updated) + ' ago'
+        else:
+            context['price_last_updated'] = 'Not available'
         return context
     
     def form_valid(self, form):
@@ -78,6 +89,7 @@ class BuyETFShares(LoginRequiredMixin, DetailView, CreateView):
         form.instance.customer = customer 
         pk = self.kwargs['pk']
         bucket = Bucket.objects.get(pk=pk)
+        bucket.update_price_per_share()
         form.instance.bucket = bucket
 
         shares = form.cleaned_data['shares_owned']
@@ -165,7 +177,7 @@ class CompaniesListView(ListView):
                 queryset = queryset.filter(stock_symbol=stock_symbol)
 
         if 'industry' in self.request.GET:
-            industry = self.request.GET['industry']
+            industry = self.request.GET['industry'].strip()
             if industry: 
                 queryset = queryset.filter(industry=industry)
         return queryset
