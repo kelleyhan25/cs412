@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import *
 from .models import *
+from .models import Company, get_stock_price, get_percent_change, format_price_change
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
@@ -12,30 +13,55 @@ class BrowseETFsView(ListView):
     model = Bucket
     context_object_name = 'buckets'
 
+class CompanyDetailView(DetailView):
+    '''a view to display a singular company and its updated stock prices and % change'''
+    template_name = 'project/company.html'
+    model = Company
+    context_object_name = 'company'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        company = context['company']
+        company.update_stock_price()
+        change = get_percent_change(company.stock_symbol)
+        formatted_change = format_price_change(change)
+        
+        context['formatted_change'] = formatted_change
+        
+        return context
 
 class CompaniesListView(ListView):
     '''view to display all the companies'''
     template_name = 'project/companies.html'
     model = Company
     context_object_name = 'companies'
+    paginate_by = 20
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        for company in queryset:
-            company.update_stock_price()
-            company.update_market_cap()
+    #def get_queryset(self):
+        #queryset = super().get_queryset()
+        #for company in queryset:
+            #company.update_stock_price()
+            #company.update_market_cap()
             
-        return queryset
+        #return queryset
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        company_price_list = []
-        for company in context['companies']:
-            company.update_stock_price()
-            change = get_percent_change(company.stock_symbol)
-            formatted_change = format_price_change(change)
-            company_price_list.append((company, formatted_change))
-        context['company_price_list'] = company_price_list
+        #company_price_list = []
+        dowjones = get_stock_price("^DJI")
+        djchange = format_price_change(get_percent_change("^DJI"))
+        sp500 = get_stock_price("^GSPC")
+        spchange = format_price_change(get_percent_change("^GSPC"))
+        context['sp500'] = sp500
+        context['spchange'] = spchange
+        context['djchange'] = djchange
+        context['dowjones'] = dowjones
+        #for company in context['companies']:
+            #company.update_stock_price()
+            #change = get_percent_change(company.stock_symbol)
+            #formatted_change = format_price_change(change)
+            #company_price_list.append((company, formatted_change))
+        #context['company_price_list'] = company_price_list
         return context
 
 

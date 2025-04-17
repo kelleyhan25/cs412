@@ -10,4 +10,5 @@ urlpatterns = [
     path(r'logout/', auth_views.LogoutView.as_view(next_page='home'), name="logout"),
     path(r'account/', views.AccountDetailView.as_view(), name="account"),
     path(r'my_investments/', views.MyInvestmentsDetailView.as_view(), name="my_investments"),
+    path(r'company/<int:pk>', views.CompanyDetailView.as_view(), name="company_detail"),
 ]

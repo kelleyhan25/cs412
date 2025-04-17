@@ -80,7 +80,7 @@ class Company(models.Model):
     market_cap = models.DecimalField(max_digits=15, decimal_places=2)
     industry = models.TextField(blank=False)
     stock_price = models.DecimalField(max_digits=10, decimal_places=2)
-
+    
     def update_market_cap(self):
         '''update the market cap with most recent data pulled from yfinance api'''
         cap = get_market_cap(self.stock_symbol)
@@ -118,6 +118,10 @@ class Bucket(models.Model):
     def __str__(self):
         '''return a string representation of this Bucket'''
         return f'{self.bucket_name}'
+    
+    def company_count(self):
+        '''returns the number of companies tied to the bucket'''
+        return BucketCompany.objects.filter(bucket=self).count()
 
 class BucketCompany(models.Model):
     '''encapsulates the relationship (many to many) with bucket and companies.'''
@@ -140,3 +144,34 @@ class Investment(models.Model):
     def __str__(self):
         '''returns a string representation of the investment'''
         return f'Purchased on {self.purchase_date}'
+    
+
+def load_data():
+        '''function to load the data records from the nyse csv file into company instances'''
+        
+        filename = '/Users/khan/Desktop/django/nysetop100.csv'
+        f = open(filename)
+        f.readline() #discard headers 
+        Company.objects.all().delete()
+
+        for line in f:
+            fields = line.split(',')
+
+            try: 
+                price = Decimal(fields[1].replace(',', '').strip())
+                market_cap_str = fields[3].strip().upper().replace(',', '')
+                if market_cap_str.endswith('B'):
+                    market_cap = Decimal(market_cap_str[:-1]) * 1_000_000_000
+                elif market_cap_str.endswith('M'):
+                    market_cap = Decimal(market_cap_str[:-1]) * 1_000_000
+                else:
+                    market_cap = Decimal(market_cap_str)
+                company = Company(company_name=fields[0],
+                                  stock_symbol=fields[4],
+                                  market_cap=market_cap,
+                                  industry=fields[5],
+                                  stock_price=price,
+                )
+                company.save()
+            except: 
+                print(f"Skipped: {fields}")

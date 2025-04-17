@@ -1,19 +1,136 @@
-th.postive {
+
+.dashboard {
+    padding: 2rem; 
+}
+
+.dash-head {
+    font-size: 1.5rem; 
+    font-weight: 600; 
+    margin-bottom:1.5rem; 
+}
+
+.table-card {
+    background:white; 
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    padding: 1rem; 
+}
+.company-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.company-table thead {
+    background-color: #2563eb;
+}
+
+.company-table th, .company-table td {
+    padding: 0.75rem 1rem; 
+    text-align: left;
+    font-size: 14px; 
+}
+
+.company-table tr:not(:last-child) {
+    border-bottom: 1px solid #e5e7eb; 
+}
+.stat-card {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+  
+.stat-label {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+  
+.stat-value {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+  
+.stat-change {
+    font-size: 14px;
+    display: inline-block;
+    padding: 3px 6px;
+    border-radius: 4px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.posneg {
+    padding: 4px 8px; 
+    border-radius: 9999px; 
+    font-size: 12px; 
+    font-weight: 500; 
+    display: inline-block; 
+}
+
+.posneg-positive {
+    background-color: #fef2f2;
     color: green !important;
 }
-
-th.negative {
+.posneg-negative {
+    background-color: #fef2f2;
     color: red !important;
 }
-
-th.neutral {
+.posneg-neutral {
+    background-color: #fef2f2;
     color: yellow !important;
+}
+.etf-grid {
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px,1fr));
+    gap:20px; 
+}
+
+.etf-card {
+    border: 1px solid #ddd; 
+    border-radius:12px; 
+    padding: 16px; 
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    
+}
+
+.etf-card h3 {
+    margin-top: 0; 
+    font-size: 1.1rem;
+}
+
+.company-count {
+    color: gray; 
+    font-size: 0.9rem; 
+    margin-bottom: 4px; 
+}
+
+.buy-button {
+    background-color: #3b82f6;
+    color: white;
+    padding: 10px; 
+    border: none; 
+    border-radius: 6px;
+    cursor: pointer; 
+    width: 100px;
+    font-weight: bold; 
+    margin-top:10px; 
+}
+
+.buy-button:hover {
+    background-color: #2563eb;
 }
 
 body {
     background-color: white;
     color: black;
-    font-family: arial;
+    font-family: 'Helvetica', sans-serif;
 }
 
 table, th, td {
@@ -69,3 +186,4 @@ img {
     width: 60%; 
     margin: auto; 
 }
+

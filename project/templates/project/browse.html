@@ -2,19 +2,18 @@
 {% extends 'project/base.html' %}
 {% block content %}
 
-<div>
+<h3>Browse ETFs</h3>
+<div class="etf-grid">
     {% for b in buckets %} 
-    <table>
-        <tr>
-            <th>{{b.bucket_symbol}}
-                <p>{{b.bucket_name}}</p>
-                <p>${{b.price_per_share}}</p>
-            </th>
-           
-        </tr>
-       
-    </table>
-   
+    <div class="etf-card">
+        <h3>{{b.bucket_name}}</h3>
+        <p>{{b.description}}</p>
+        <p>{{b.price_per_share}} USD</p>
+        <p class="company-count">{{b.company_count}} companies</p>
+        <a href="{}" class="buy-button">Buy Shares</a>
+
+    </div>
+    
     {% endfor %}
 </div>
 

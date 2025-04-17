@@ -2,42 +2,91 @@
 {% extends 'project/base.html' %}
 {% block content %}
 
-<div>
-    <h3>Companies</h3>
-    
-    <table>
-       <tr>
-        <th>Name</th>
-        <th>Stock Symbol</th>
-        <th>Market Cap (Billion)</th>
-        <th>Industry</th>
-        <th>Price ($)</th>
-        <th>% Change</th>
-       </tr>
-       {% for c, price_change in company_price_list %} 
-       <tr>
-        <th>{{c.company_name}}</th>
-        <th>{{c.stock_symbol}}</th>
-        <th>{{c.market_cap}}</th>
-        <th>{{c.industry}}</th>
-        <th>{{c.stock_price}}</th>
-        <th class="
-            {% if '↑' in price_change %}
-                positive
-            {% elif '↓' in price_change %}
-                negative
-            {% else %}
-                neutral
-            {% endif %}
-            ">
-            {{price_change}}
-        </th>
-       </tr>
-       {% endfor %}
-    </table>
-    
+<div class="dashboard">
+    <h3 class="dash-head">Overview</h3>
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-label">DOW JONES (DOW)</div>
+            <div class="stat-value">{{dowjones}} USD</div>
+            <div class="posneg
+                            {% if '↑' in djchange %}
+                                posneg-positive
+                            {% elif '↓' in djchange %}
+                                posneg-negative
+                            {% else %}
+                                posneg-neutral
+                            {% endif %}
+                        ">
+                        {{spchange}}
+                     </div>
+            
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">S&P 500</div>
+            <div class="stat-value">{{sp500}} USD</div>
+            
+            <div class="posneg
+                            {% if '↑' in spchange %}
+                                posneg-positive
+                            {% elif '↓' in spchange %}
+                                posneg-negative
+                            {% else %}
+                                posneg-neutral
+                            {% endif %}
+                        ">
+                        {{spchange}}
+                     </div>
+        </div>
+    </div>
 
-    
+    <h3 class="dash-head">Companies</h3>
+
+    <div class="table-card">
+        <table class="company-table">
+            <thead>
+                <tr>
+                    <th>Company Name</th>
+                    <th>Stock Symbol</th>
+                    <th>Price ($)</th>
+                    <th>Market Cap (Billion)</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                
+                {% for c in companies %}
+                <tr>
+                    <td><a href="{% url 'company_detail' c.pk %}">{{c.company_name}}</a></td>
+                    <td>{{c.stock_symbol}}</td>
+                    <td>{{c.stock_price}}</td>
+                    <td>{{c.market_cap}}</td>
+                   
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        {% if is_paginated %}
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li>
+                    <span><a href="?page={{ page_obj.previous_page_number }}">Previous</a></span>
+                
+                </li>
+            {% endif %}
+                <li class="">
+                    <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</span>
+                </li>
+            {% if page_obj.has_next %}
+                <li>
+                    <span><a href="?page={{ page_obj.next_page_number }}">Next</a></span>
+                </li>
+            {% endif %}
+            </ul>
+        {% endif %}
+    </div>
 </div>
+
 
 {% endblock %}

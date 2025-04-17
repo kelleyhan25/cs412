@@ -1,0 +1,42 @@
+<!--project/templates/project/company.html-->
+{% extends 'project/base.html' %}
+{% block content %}
+
+
+<div class="table-card">
+    <table class="company-table">
+        <thead>
+            <tr>
+                <th>Company Name</th>
+                <th>Stock Symbol</th>
+                <th>Most Recently Updated Price ($)</th>
+                <th>% Change</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            
+            
+            <tr>
+                <td>{{company.company_name}}</td>
+                <td>{{company.stock_symbol}}</td>
+                <td>{{company.stock_price}}</td>
+                <td><span class="posneg
+                            {% if '↑' in formatted_change %}
+                                posneg-positive
+                            {% elif '↓' in formatted_change %}
+                                posneg-negative
+                            {% else %}
+                                posneg-neutral
+                            {% endif %}
+                        ">
+                        {{formatted_change}}
+                        </span></td>
+
+            </tr>
+            
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
