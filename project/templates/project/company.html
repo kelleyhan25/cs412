@@ -39,4 +39,21 @@
     </table>
 </div>
 
+<div>
+    <h3>Buy Shares</h3>
+
+    <div class="table-card">
+    
+        <form method="POST">
+            {% csrf_token %}
+            <table>
+                {{form.as_table}}
+            </table>
+            <br>
+            <input type="submit" name="BUY" value="BUY">
+        </form>
+       
+        
+    </div>
+
 {% endblock %}

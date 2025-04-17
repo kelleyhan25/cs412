@@ -12,4 +12,5 @@ urlpatterns = [
     path(r'my_investments/', views.MyInvestmentsDetailView.as_view(), name="my_investments"),
     path(r'company/<int:pk>', views.CompanyDetailView.as_view(), name="company_detail"),
     path(r'buy_shares/<int:pk>', views.BuyETFShares.as_view(), name="buy_shares"),
+    path(r'register/', views.RegistrationView.as_view(), name="register"),
 ]

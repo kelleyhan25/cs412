@@ -7,7 +7,14 @@
 <form method="post" action="{% url 'login' %}" >
     {% csrf_token %}
     {{form}}
+    {% if request.GET.next %}
+    <input type="hidden" name="next value={{request.GET.next}}">
+    
+    {% else %}
     <input type="hidden" name="next" value="{% url 'home' %}">
+    {% endif %}
     <input type="submit" value="Login">
 </form>
+<hr>
+Don't have an account? <a href="{% url 'register' %}">Register here</a>
 {% endblock %}

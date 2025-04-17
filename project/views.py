@@ -4,10 +4,39 @@ from django.views.generic import *
 from .models import *
 from .models import Company, get_stock_price, get_percent_change, format_price_change
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import CreateInvestmentForm
+from .forms import CreateInvestmentForm, CreateCompanyInvestmentForm, CreateAccountForm
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User 
+from django.contrib.auth import login 
 
 
 # Create your views here.
+class RegistrationView(CreateView):
+    '''account regisration view'''
+    template_name = 'project/register.html'
+    form_class = CreateAccountForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['usercreationform'] = UserCreationForm()
+        return context
+    
+    def form_valid(self, form):
+        '''reconstruct usercreationform from post data'''
+        user_form = UserCreationForm(self.request.POST)
+        user = user_form.save()
+
+        form.instance.user = user
+        account_balance = form.cleaned_data['account_balance']
+        form.instance.cash_value = account_balance
+        form.instance.stock_value = 0
+
+        return super().form_valid(form)
+    
+    def get_success_url(self):
+        '''url to redirect to after creating a new user'''
+        return reverse('login')
+    
 class BrowseETFsView(ListView):
     '''view to display all ETFs'''
     template_name = 'project/browse.html'
@@ -45,7 +74,7 @@ class BuyETFShares(LoginRequiredMixin, DetailView, CreateView):
         shares = form.cleaned_data['shares_owned']
         total_cost = shares * bucket.price_per_share
 
-        if customer.account_balance < total_cost: 
+        if customer.cash_value < total_cost: 
             form.add_error(None, "Insufficient funds")
             return self.form_invalid(form)
         
@@ -61,14 +90,20 @@ class BuyETFShares(LoginRequiredMixin, DetailView, CreateView):
 
 
 
-class CompanyDetailView(DetailView):
-    '''a view to display a singular company and its updated stock prices and % change'''
+class CompanyDetailView(LoginRequiredMixin, CreateView, DetailView):
+    '''a view to display a singular company and its updated stock prices and % change and buy shares'''
     template_name = 'project/company.html'
     model = Company
     context_object_name = 'company'
+    form_class = CreateCompanyInvestmentForm
+
+    def get_success_url(self):
+        '''redirects to my investments page after purchase'''
+        return reverse('my_investments')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
         company = context['company']
         company.update_stock_price()
         change = get_percent_change(company.stock_symbol)
@@ -77,6 +112,28 @@ class CompanyDetailView(DetailView):
         context['formatted_change'] = formatted_change
         
         return context
+    
+    def form_valid(self, form):
+        '''investment -> user'''
+        customer = Customer.objects.get(user=self.request.user)
+        form.instance.customer = customer
+        pk = self.kwargs['pk']
+        company = Company.objects.get(pk=pk)
+        form.instance.company = company 
+        shares = form.cleaned_data['shares_purchased']
+        total_cost = shares * company.stock_price
+
+        if customer.cash_value < total_cost:
+            form.add_error(None, "Insufficient funds")
+            return self.form_invalid(form)
+        
+        customer.cash_value -= total_cost
+        customer.stock_value += total_cost
+        customer.save()
+        return super().form_valid(form)
+    
+    def get_login_url(self):
+        return reverse('login')
 
 class CompaniesListView(ListView):
     '''view to display all the companies'''
@@ -106,7 +163,6 @@ class CompaniesListView(ListView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        #company_price_list = []
         dowjones = get_stock_price("^DJI")
         djchange = format_price_change(get_percent_change("^DJI"))
         sp500 = get_stock_price("^GSPC")
@@ -132,8 +188,11 @@ class MyInvestmentsDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         customer = self.get_object()
+        context['customer'] = customer 
         my_investments = customer.get_investments()
         context['my_investments'] = my_investments
+        company_investments = customer.getCompanyInvestments()
+        context['company_investments'] = company_investments
         user = self.request.user 
         context['user'] = user 
         return context

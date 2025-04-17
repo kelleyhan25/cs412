@@ -72,6 +72,11 @@ class Customer(models.Model):
         '''returns all the investments the customer has'''
         investments = Investment.objects.filter(customer=self)
         return investments 
+    
+    def getCompanyInvestments(self):
+        '''returns all company investments a customer has'''
+        companyinvestments = InvestmentCompany.objects.filter(customer=self)
+        return companyinvestments
 
 class Company(models.Model):
     '''encapsulates the idea of a company and its attributes'''
@@ -136,7 +141,7 @@ class BucketCompany(models.Model):
         return f'{self.bucket.bucket_name} includes {self.company.company_name}'
 
 class Investment(models.Model):
-    '''encapsulates the idea of an investment'''
+    '''encapsulates the idea of an investment of a bucket'''
     # data attributes of an investment 
     customer = models.ForeignKey("Customer", on_delete=models.CASCADE)
     bucket = models.ForeignKey("Bucket", on_delete=models.CASCADE)
@@ -146,7 +151,18 @@ class Investment(models.Model):
     def __str__(self):
         '''returns a string representation of the investment'''
         return f'Purchased on {self.purchase_date}'
-    
+
+class InvestmentCompany(models.Model):
+    '''encapsulates the idea of an investment of a company'''
+    #data attributes of an investment company
+    customer = models.ForeignKey("Customer", on_delete=models.CASCADE)
+    company = models.ForeignKey("Company", on_delete=models.CASCADE)
+    shares_purchased = models.IntegerField(blank=False)
+    purchase_date = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        '''returns a string representation of the investment'''
+        return f'Purchased on {self.purchase_date}'
 
 def load_data():
         '''function to load the data records from the nyse csv file into company instances'''
