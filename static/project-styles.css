@@ -3,6 +3,10 @@
     padding: 2rem; 
 }
 
+.search {
+    border:none; 
+}
+
 .dash-head {
     font-size: 1.5rem; 
     font-weight: 600; 
@@ -83,7 +87,7 @@
 }
 .posneg-neutral {
     background-color: #fef2f2;
-    color: yellow !important;
+    color: gray !important;
 }
 .etf-grid {
     display:grid;

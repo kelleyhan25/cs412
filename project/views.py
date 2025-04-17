@@ -37,13 +37,24 @@ class CompaniesListView(ListView):
     context_object_name = 'companies'
     paginate_by = 20
 
-    #def get_queryset(self):
-        #queryset = super().get_queryset()
-        #for company in queryset:
-            #company.update_stock_price()
-            #company.update_market_cap()
-            
-        #return queryset
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        
+        if 'company_name' in self.request.GET: 
+            company_name = self.request.GET['company_name']
+            if company_name:
+                queryset = queryset.filter(company_name=company_name)
+        
+        if 'stock_symbol' in self.request.GET:
+            stock_symbol = self.request.GET['stock_symbol']
+            if stock_symbol:
+                queryset = queryset.filter(stock_symbol=stock_symbol)
+
+        if 'industry' in self.request.GET:
+            industry = self.request.GET['industry']
+            if industry: 
+                queryset = queryset.filter(industry=industry)
+        return queryset
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -56,13 +67,8 @@ class CompaniesListView(ListView):
         context['spchange'] = spchange
         context['djchange'] = djchange
         context['dowjones'] = dowjones
-        #for company in context['companies']:
-            #company.update_stock_price()
-            #change = get_percent_change(company.stock_symbol)
-            #formatted_change = format_price_change(change)
-            #company_price_list.append((company, formatted_change))
-        #context['company_price_list'] = company_price_list
         return context
+    
 
 
 class MyInvestmentsDetailView(LoginRequiredMixin, DetailView):

@@ -38,8 +38,11 @@
                      </div>
         </div>
     </div>
-
+  
     <h3 class="dash-head">Companies</h3>
+    <div class="search">
+        {% include "project/search.html" %}
+    </div>
 
     <div class="table-card">
         <table class="company-table">
@@ -47,7 +50,7 @@
                 <tr>
                     <th>Company Name</th>
                     <th>Stock Symbol</th>
-                    <th>Price ($)</th>
+                    <th>Industry</th>
                     <th>Market Cap (Billion)</th>
                     
                 </tr>
@@ -58,7 +61,7 @@
                 <tr>
                     <td><a href="{% url 'company_detail' c.pk %}">{{c.company_name}}</a></td>
                     <td>{{c.stock_symbol}}</td>
-                    <td>{{c.stock_price}}</td>
+                    <td>{{c.industry}}</td>
                     <td>{{c.market_cap}}</td>
                    
                 </tr>
