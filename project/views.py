@@ -12,7 +12,7 @@ from django.contrib.auth import login
 
 # Create your views here.
 class RegistrationView(CreateView):
-    '''account regisration view'''
+    '''account registration view'''
     template_name = 'project/register.html'
     form_class = CreateAccountForm
 
@@ -24,18 +24,27 @@ class RegistrationView(CreateView):
     def form_valid(self, form):
         '''reconstruct usercreationform from post data'''
         user_form = UserCreationForm(self.request.POST)
-        user = user_form.save()
-
-        form.instance.user = user
-        account_balance = form.cleaned_data['account_balance']
-        form.instance.cash_value = account_balance
-        form.instance.stock_value = 0
-
-        return super().form_valid(form)
+ 
+        if user_form.is_valid():
+            user = user_form.save()
+            login(self.request, user)
+            form.instance.user = user
+            account_balance = form.cleaned_data['account_balance']
+            form.instance.cash_value = account_balance
+            form.instance.stock_value = 0
+            
+            return super().form_valid(form)
+        else: #couldn't figure out why just the above code wasn't working, stack overflow led me to this https://docs.djangoproject.com/en/3.1/ref/forms/api/#django.forms.Form.add_error and the below else block
+            print(f"UserCreationForm errors: {user_form.errors}")
+            for field, errors in user_form.errors.items():
+                for error in errors:
+                    form.add_error(None, f"{field}: {error}")
+            
+            return self.form_invalid(form)
     
     def get_success_url(self):
-        '''url to redirect to after creating a new user'''
-        return reverse('login')
+        return reverse('my_investments')
+    
     
 class BrowseETFsView(ListView):
     '''view to display all ETFs'''

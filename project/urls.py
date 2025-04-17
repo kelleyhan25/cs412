@@ -1,5 +1,6 @@
 from django.urls import path 
 from . import views 
+from .views import *
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -12,5 +13,5 @@ urlpatterns = [
     path(r'my_investments/', views.MyInvestmentsDetailView.as_view(), name="my_investments"),
     path(r'company/<int:pk>', views.CompanyDetailView.as_view(), name="company_detail"),
     path(r'buy_shares/<int:pk>', views.BuyETFShares.as_view(), name="buy_shares"),
-    path(r'register/', views.RegistrationView.as_view(), name="register"),
+    path(r'register/', RegistrationView.as_view(), name="register"),
 ]

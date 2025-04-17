@@ -28,4 +28,4 @@ class CreateAccountForm(forms.ModelForm):
     class Meta: 
         '''associate the form with a model from the database'''
         model = Customer
-        fields = ['first_name', 'last_name', 'email', 'dob', 'account_balance', ]
+        fields = ['first_name', 'last_name', 'email', 'dob', 'account_balance',]
