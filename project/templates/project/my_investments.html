@@ -3,6 +3,26 @@
 {% block content %}
 
 <h3>My Investments</h3>
-{{my_investments}}
+<table class="company-table">
+    <thead>
+        <tr>
+            <th>ETF Name</th>
+            <th>Symbol</th>
+            <th>Shares Owned</th>
+            <th>Purchase Date</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for investment in my_investments %}
+        <tr>
+            <td>{{investment.bucket.bucket_name}}</td>
+            <td>{{investment.bucket.bucket_symbol}}</td>
+            <td>{{investment.shares_owned}}</td>
+            <td>{{investment.purchase_date}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
 {% endblock %}

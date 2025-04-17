@@ -1,0 +1,67 @@
+<!--project/templates/project/buy_shares.html-->
+{% extends 'project/base.html' %}
+{% block content %}
+
+<div>
+    <h3>Buy Shares: {{bucket.bucket_name}} {{bucket.bucket_symbol}}</h3>
+
+    <div class="table-card">
+        <table class="company-table">
+            <h3>ETF Details</h3>
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Price Per Share USD</th>
+                    <th>Total Value in Billions:</th>
+                    
+                    
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{bucket.description}}</td>
+                    <td>{{bucket.price_per_share}}</td>
+                    <td>{{bucket.total_value}} B</td>
+                </tr>
+            
+            </tbody>
+        </table>
+        <table class="company-table">
+            <h3>Companies in this ETF (Partial List)</h3>
+            <thead>
+                <tr>
+                    <th>Company Name</th>
+                    <th>Stock Symbol</th>
+                    <th>Percentage</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for b in bucket_companies %}
+                <tr>
+                    <th>{{b.company.company_name}}</th>
+                    <th>{{b.company.stock_symbol}}</th>
+                    <th>{{b.percentage}} %</th>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <form method="POST">
+            {% csrf_token %}
+            <table>
+                {{form.as_table}}
+            </table>
+            <br>
+            <input type="submit" name="BUY" value="BUY">
+        </form>
+       
+        
+    </div>
+
+
+    
+</div>
+
+
+{% endblock %}

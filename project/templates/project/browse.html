@@ -10,7 +10,7 @@
         <p>{{b.description}}</p>
         <p>{{b.price_per_share}} USD</p>
         <p class="company-count">{{b.company_count}} companies</p>
-        <a href="{}" class="buy-button">Buy Shares</a>
+        <a href="{% url 'buy_shares' b.pk %}" class="buy-button">Buy Shares</a>
 
     </div>
     

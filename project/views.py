@@ -4,6 +4,7 @@ from django.views.generic import *
 from .models import *
 from .models import Company, get_stock_price, get_percent_change, format_price_change
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import CreateInvestmentForm
 
 
 # Create your views here.
@@ -12,6 +13,53 @@ class BrowseETFsView(ListView):
     template_name = 'project/browse.html'
     model = Bucket
     context_object_name = 'buckets'
+
+class BuyETFShares(LoginRequiredMixin, DetailView, CreateView):
+    '''a view to buy an etf share and add an investment to the database'''
+    template_name = 'project/buy_shares.html'
+    model = Bucket
+    form_class = CreateInvestmentForm
+    context_object_name = 'bucket'
+
+    def get_success_url(self):
+        '''redirects to my investments page after purchase'''
+        return reverse('my_investments')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pk = self.kwargs['pk']
+        bucket = Bucket.objects.get(pk=pk)
+
+        bucket_companies = BucketCompany.objects.filter(bucket=bucket)
+        context['bucket_companies'] = bucket_companies
+        return context
+    
+    def form_valid(self, form):
+        '''investment -> user'''
+        customer = Customer.objects.get(user=self.request.user)
+        form.instance.customer = customer 
+        pk = self.kwargs['pk']
+        bucket = Bucket.objects.get(pk=pk)
+        form.instance.bucket = bucket
+
+        shares = form.cleaned_data['shares_owned']
+        total_cost = shares * bucket.price_per_share
+
+        if customer.account_balance < total_cost: 
+            form.add_error(None, "Insufficient funds")
+            return self.form_invalid(form)
+        
+        customer.cash_value -= total_cost
+        customer.stock_value += total_cost
+        customer.save()
+
+        return super().form_valid(form)
+    
+    def get_login_url(self):
+        '''return url required for login'''
+        return reverse('login')
+
+
 
 class CompanyDetailView(DetailView):
     '''a view to display a singular company and its updated stock prices and % change'''
@@ -75,7 +123,7 @@ class MyInvestmentsDetailView(LoginRequiredMixin, DetailView):
     '''a view to display the user's investments and data related to it'''
     template_name = 'project/my_investments.html'
     model = Customer
-    context_object_name = 'my_investments'
+    context_object_name = 'customer'
 
     def get_object(self):
         '''method for customer lookup in URL w/out pk'''

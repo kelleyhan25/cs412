@@ -3,20 +3,29 @@
 {% block content %}
 
 <h3>Account Details</h3>
-<table>
-    <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Date of Birth</th>
-        <th>Account Balance $</th>
-    </tr>
+<table class="company-table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Date of Birth</th>
+            <th>Account Balance $</th>
+            <th>Cash Value $</th>
+            <th>Stock Value $</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{account.first_name}} {{account.last_name}}</td>
+            <td>{{account.email}}</td>
+            <td>{{account.dob}}</td>
+            <td>${{account.account_balance}}</td>
+            <td>${{account.cash_value}}</td>
+            <td>${{account.stock_value}}</td>
+        </tr>
+    </tbody>
 
-    <tr>
-        <td>{{account.first_name}} {{account.last_name}}</td>
-        <td>{{account.email}}</td>
-        <td>{{account.dob}}</td>
-        <td>${{account.account_balance}}</td>
-    </tr>
+    
     
 </table>
 

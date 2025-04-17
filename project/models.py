@@ -60,6 +60,8 @@ class Customer(models.Model):
     email = models.EmailField(blank=False)
     dob = models.DateField(blank=False)
     account_balance = models.DecimalField(max_digits=12, decimal_places=2)
+    cash_value = models.DecimalField(max_digits=12, decimal_places=2)
+    stock_value = models.DecimalField(max_digits=12, decimal_places=2)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -68,7 +70,7 @@ class Customer(models.Model):
     
     def get_investments(self):
         '''returns all the investments the customer has'''
-        investments = Investment.objects.get(customer=self)
+        investments = Investment.objects.filter(customer=self)
         return investments 
 
 class Company(models.Model):
