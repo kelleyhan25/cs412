@@ -58,6 +58,52 @@ class BrowseETFsView(ListView):
             bucket.update_price_per_share()
         return queryset 
 
+class SellETFShares(LoginRequiredMixin, DeleteView):
+    '''a view to sell an etf share and delete the investment from the database'''
+    template_name = 'project/sell_shares.html'
+    model = Investment
+    context_object_name = 'investment'
+
+
+    def get_success_url(self):
+        '''return a url for redirection after selling'''
+        return reverse('my_investments')
+    
+    def form_valid(self, form):
+        '''method where i can process during POST and update account balance'''
+        self.object = self.get_object()
+        print("form valid called")
+        self.object.bucket.update_price_per_share()
+        print("about to call sell")
+        self.object.sell()
+        print("after calling sell")
+
+        return super().form_valid(form)
+
+class SellCompanyShares(LoginRequiredMixin, DeleteView):
+    '''a view to sell a company share and delete the investment from the database'''
+    template_name = 'project/sell_shares.html'
+    model = InvestmentCompany
+    context_object_name = 'investment'
+
+
+    def get_success_url(self):
+        '''return a url for redirection after selling'''
+        return reverse('my_investments')
+    
+
+    def form_valid(self, form):
+        '''method where i can process during POST and update account balance'''
+        self.object = self.get_object()
+        print("form valid called")
+        self.object.company.update_stock_price()
+        print("about to call sell")
+        self.object.sell()
+        print("after calling sell")
+        return super().form_valid(form)
+    
+    
+
 class BuyETFShares(LoginRequiredMixin, DetailView, CreateView):
     '''a view to buy an etf share and add an investment to the database'''
     template_name = 'project/buy_shares.html'
@@ -208,8 +254,8 @@ class MyInvestmentsDetailView(LoginRequiredMixin, DetailView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        customer = self.get_object()
-        context['customer'] = customer 
+        customer = Customer.objects.get(user=self.request.user)
+        context['customer'] = customer
         my_investments = customer.get_investments()
         context['my_investments'] = my_investments
         company_investments = customer.getCompanyInvestments()

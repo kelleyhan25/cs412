@@ -79,6 +79,8 @@ class Customer(models.Model):
         '''returns all company investments a customer has'''
         companyinvestments = InvestmentCompany.objects.filter(customer=self)
         return companyinvestments
+   
+
 
 class Company(models.Model):
     '''encapsulates the idea of a company and its attributes'''
@@ -176,6 +178,17 @@ class Investment(models.Model):
     def __str__(self):
         '''returns a string representation of the investment'''
         return f'Purchased on {self.purchase_date}'
+    
+    def sell(self):
+        '''sell an investment etf'''
+        print(f'calling sell')
+        total_value = self.shares_owned * self.bucket.price_per_share
+        customer = Customer.objects.get(pk=self.customer.pk)
+        customer.cash_value += total_value
+        customer.stock_value -= total_value
+        customer.save()
+        return total_value
+
 
 class InvestmentCompany(models.Model):
     '''encapsulates the idea of an investment of a company'''
@@ -188,6 +201,17 @@ class InvestmentCompany(models.Model):
     def __str__(self):
         '''returns a string representation of the investment'''
         return f'Purchased on {self.purchase_date}'
+    
+    def sell(self):
+        '''sell an investment company'''
+        self.company.update_stock_price()
+        print(f'calling sell')
+        total_value = self.shares_purchased * self.company.stock_price
+        customer = Customer.objects.get(pk=self.customer.pk)
+        customer.cash_value += total_value
+        customer.stock_value -= total_value
+        customer.save()
+        return total_value
 
 def load_data():
         '''function to load the data records from the nyse csv file into company instances'''

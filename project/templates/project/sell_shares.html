@@ -1,0 +1,18 @@
+<!--project/templates/project/sell_shares.html-->
+{% extends 'project/base.html' %}
+{% block content %}
+
+<div>
+    <h3>Sell Shares </h3>
+
+    <form method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Sell">
+    </form>
+      
+
+    
+</div>
+
+
+{% endblock %}

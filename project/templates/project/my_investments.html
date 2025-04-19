@@ -10,6 +10,7 @@
             <th>Symbol</th>
             <th>Shares Purchased</th>
             <th>Purchase Date</th>
+            <th>Sell Shares</th>
         </tr>
     </thead>
 
@@ -20,6 +21,7 @@
             <td>{{investment.bucket.bucket_symbol}}</td>
             <td>{{investment.shares_owned}}</td>
             <td>{{investment.purchase_date}}</td>
+            <td><a href="{% url 'sell_etf' investment.pk %}" class="buy-button">Sell Shares</a></td>
         </tr>
         {% endfor %}
     </tbody>
@@ -32,6 +34,7 @@
             <th>Company Symbol</th>
             <th>Shares Purchased</th>
             <th>Purchase Date</th>
+            <th>Sell Shares</th>
         </tr>
     </thead>
     <tbody>
@@ -41,6 +44,7 @@
             <td>{{i.company.stock_symbol}}</td>
             <td>{{i.shares_purchased}}</td>
             <td>{{i.purchase_date}}</td>
+            <td><a href="{% url 'sell_company' i.pk %}" class="buy-button">Sell Shares</a></td>
         </tr>
         {% endfor %}
     </tbody>
