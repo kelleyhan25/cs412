@@ -4,7 +4,7 @@ from django.views.generic import *
 from .models import *
 from .models import Company, get_stock_price, get_percent_change, format_price_change
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import CreateInvestmentForm, CreateCompanyInvestmentForm, CreateAccountForm
+from .forms import CreateInvestmentForm, CreateCompanyInvestmentForm, CreateAccountForm, UpdateAccountForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User 
 from django.contrib.auth import login 
@@ -44,7 +44,6 @@ class RegistrationView(CreateView):
     
     def get_success_url(self):
         return reverse('my_investments')
-    
     
 class BrowseETFsView(ListView):
     '''view to display all ETFs'''
@@ -268,11 +267,13 @@ class MyInvestmentsDetailView(LoginRequiredMixin, DetailView):
         '''return the URL required for login'''
         return reverse('login')
 
-class AccountDetailView(LoginRequiredMixin, DetailView):
+class AccountDetailView(LoginRequiredMixin, DetailView, UpdateView):
     '''a view to display the account details'''
+    form_class = UpdateAccountForm
     template_name = 'project/account.html'
     model = Customer
     context_object_name = 'account'
+    
 
     def get_object(self):
         '''return the currently logged in user account info'''
@@ -281,3 +282,10 @@ class AccountDetailView(LoginRequiredMixin, DetailView):
     def get_login_url(self):
         '''return the URL required for login'''
         return reverse('login')
+    
+    def form_valid(self, form):
+        '''handle the form submission to update account'''
+        return super().form_valid(form)
+    
+    def get_success_url(self):
+        return reverse('account')

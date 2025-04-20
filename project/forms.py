@@ -29,3 +29,11 @@ class CreateAccountForm(forms.ModelForm):
         '''associate the form with a model from the database'''
         model = Customer
         fields = ['first_name', 'last_name', 'email', 'dob', 'account_balance',]
+
+class UpdateAccountForm(forms.ModelForm):
+    '''a form to update an account to the database'''
+
+    class Meta:
+        '''associate this form with the account model'''
+        model = Customer 
+        fields = ['first_name', 'last_name', 'email', 'dob', 'account_balance',]
