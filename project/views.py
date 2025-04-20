@@ -249,7 +249,9 @@ class MyInvestmentsDetailView(LoginRequiredMixin, DetailView):
 
     def get_object(self):
         '''method for customer lookup in URL w/out pk'''
-        return Customer.objects.get(user=self.request.user)
+        customer = Customer.objects.get(user=self.request.user)
+        customer.update_balances()
+        return customer
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -261,6 +263,11 @@ class MyInvestmentsDetailView(LoginRequiredMixin, DetailView):
         context['company_investments'] = company_investments
         user = self.request.user 
         context['user'] = user 
+
+        if customer.last_updated:
+            context['last_updated'] = timesince(customer.last_updated) + ' ago'
+        else: 
+            context['last_updated'] = 'Not available'
         return context
 
     def get_login_url(self):

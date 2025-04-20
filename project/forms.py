@@ -36,4 +36,4 @@ class UpdateAccountForm(forms.ModelForm):
     class Meta:
         '''associate this form with the account model'''
         model = Customer 
-        fields = ['first_name', 'last_name', 'email', 'dob', 'account_balance',]
+        fields = ['first_name', 'last_name', 'email', 'dob', ]

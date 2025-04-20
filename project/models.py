@@ -65,6 +65,7 @@ class Customer(models.Model):
     cash_value = models.DecimalField(max_digits=12, decimal_places=2)
     stock_value = models.DecimalField(max_digits=12, decimal_places=2)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    last_updated = models.DateTimeField(blank=True)
 
     def __str__(self):
         '''return a string representation of this Customer object'''
@@ -79,6 +80,34 @@ class Customer(models.Model):
         '''returns all company investments a customer has'''
         companyinvestments = InvestmentCompany.objects.filter(customer=self)
         return companyinvestments
+    
+    def update_balances(self):
+        '''updates a customer's balances based on current stock prices on yfinance api, updates every half hour'''
+        if self.last_updated and timezone.now() - self.last_updated < timedelta(minutes=30):
+            return False 
+        
+        new_value = Decimal('0.00') 
+
+        # updates the ETF investment values
+        for investment in self.get_investments(): 
+            investment.bucket.update_price_per_share()
+            shares = Decimal(str(investment.shares_owned))
+            investment_value = shares * investment.bucket.price_per_share
+            new_value += investment_value
+        
+        # updates the company investment values 
+
+        for investment in self.getCompanyInvestments():
+            investment.company.update_stock_price()
+            shares = Decimal(str(investment.shares_purchased))
+            investment_value = shares * investment.company.stock_price
+            new_value += investment_value
+        
+        self.stock_value = new_value
+        self.account_balance = self.cash_value + self.stock_value
+        self.last_updated = timezone.now()
+        self.save()
+        return True 
    
 
 
@@ -182,7 +211,9 @@ class Investment(models.Model):
     def sell(self):
         '''sell an investment etf'''
         print(f'calling sell')
-        total_value = self.shares_owned * self.bucket.price_per_share
+        bucket_price = self.bucket.price_per_share
+        shares = Decimal(str(self.shares_owned))
+        total_value = shares * bucket_price
         customer = Customer.objects.get(pk=self.customer.pk)
         customer.cash_value += total_value
         customer.stock_value -= total_value
@@ -206,7 +237,9 @@ class InvestmentCompany(models.Model):
         '''sell an investment company'''
         self.company.update_stock_price()
         print(f'calling sell')
-        total_value = self.shares_purchased * self.company.stock_price
+        stock_price = self.company.stock_price
+        shares = Decimal(str(self.shares_purchased))
+        total_value = shares * Decimal(str(stock_price))
         customer = Customer.objects.get(pk=self.customer.pk)
         customer.cash_value += total_value
         customer.stock_value -= total_value

@@ -2,7 +2,8 @@
 {% extends 'project/base.html' %}
 {% block content %}
 
-<h3>Browse ETFs</h3>
+<div class="table-card">
+    <h3>Browse ETFs</h3>
 <div class="etf-grid">
     {% for b in buckets %} 
     <div class="etf-card">
@@ -16,5 +17,7 @@
     
     {% endfor %}
 </div>
+</div>
+
 
 {% endblock %}

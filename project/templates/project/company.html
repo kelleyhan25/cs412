@@ -4,6 +4,7 @@
 
 
 <div class="table-card">
+    <h3>Buy Shares</h3>
     <table class="company-table">
         <thead>
             <tr>
@@ -37,23 +38,32 @@
             
         </tbody>
     </table>
+    <div>
+  
+
+        <div >
+            
+            <form method="POST" class="buy-form">
+                {% csrf_token %}
+                <table>
+                    {% for field in form %}
+                    <tr>
+                        <th>
+                            {% if field.name == 'shares_purchased' %}Number of Shares:
+                            {% endif %}
+                        </th>
+                        <td>{{field}}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                <br>
+                <input type="submit" name="BUY" value="BUY" class="buy-button">
+            </form>
+           
+            
+        </div>
+    
 </div>
 
-<div>
-    <h3>Buy Shares</h3>
-
-    <div class="table-card">
-    
-        <form method="POST">
-            {% csrf_token %}
-            <table>
-                {{form.as_table}}
-            </table>
-            <br>
-            <input type="submit" name="BUY" value="BUY">
-        </form>
-       
-        
-    </div>
 
 {% endblock %}

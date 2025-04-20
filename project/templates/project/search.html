@@ -1,38 +1,39 @@
 <!-- project/templates/project/search.html -->
 
 
-<table>
+<table class="search-form">
 <form action="{% url 'companies' %}">
 
-    <tr>
-        <th>Company Name:</th>
-        <td><input type="text" name="company_name"></td>
-    </tr>
-    <tr>
-        <th>Stock Symbol</th>
-        <td><input type="text" name="stock_symbol"></td>
-    </tr>
-    <tr>
-        <th>Industry</th>
-        <td><select name="industry" id="industry">
-            <option value="">All</option>
-            <option value="Industrials">Industrials</option>
-            <option value="Consumer Discretionary">Consumer Discretionary</option>
-            <option value="Financials">Financials</option>
-            <option value="Communication Services">Communication Services</option>
-            <option value="Information Technology">Information Technology</option>
-            <option value="Health Care">Health Care</option>
-            <option value="Utilities">Utilities</option>
-            <option value="Energy">Energy</option>
-            <option value="Materials">Materials</option>
-            <option value="Real Estate">Real Estate</option>
-        </select></td>
-    </tr>
-    <tr>
-        <td><input type="submit"></td>
-        <td></td>
-    </tr>
-    
+    <div class="form">
+        <tr>
+            <th><label for="company_name">Company Name</label></th>
+            <th><label for="stock_symbol">Stock Symbol</label></th>
+            <th><label for="industry">Industry</label></th>
+        </tr>
+        <tr>
+            <td><input type="text" name="company_name" id="company_name" placeholder="Search..."></td>
+            <td><input type="text" name="stock_symbol" id="stock_symbol" placeholder="Search..."></td>
+            <td>
+                <select name="industry" id="industry">
+                    <option value="">All</option>
+                    <option value="Industrials">Industrials</option>
+                    <option value="Consumer Discretionary">Consumer Discretionary</option>
+                    <option value="Financials">Financials</option>
+                    <option value="Communication Services">Communication Services</option>
+                    <option value="Information Technology">Information Technology</option>
+                    <option value="Health Care">Health Care</option>
+                    <option value="Utilities">Utilities</option>
+                    <option value="Energy">Energy</option>
+                    <option value="Materials">Materials</option>
+                    <option value="Real Estate">Real Estate</option>
+                </select>
+            </td>
+            <td colspan="3" style="text-align: right;">
+                <input type="submit" class="search-button" value="Search">
+            </td>
+        </tr>
+       
+    </div>
 </form>
 </table>
 

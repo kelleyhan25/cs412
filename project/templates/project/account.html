@@ -2,7 +2,8 @@
 {% extends 'project/base.html' %}
 {% block content %}
 
-<h3>Account Details</h3>
+<div class="table-card">
+    <h3>Account Details</h3>
 <table class="company-table">
     <thead>
         <tr>
@@ -26,22 +27,31 @@
     
 </table>
 
-<h3>Edit Profile:</h3>
-<!--insert form here to edit the profile/user -->
-<form method="POST" enctype="multipart/form-data">
+<h3>Edit Account:</h3>
+<form method="POST" enctype="multipart/form-data" class="edit-account">
     {% csrf_token %}
     <table>
         {% for field in form %}
         <tr>
-            <th>{{field.name}}</th>
+            <th>
+                {% if field.name == 'first_name' %}First Name:
+                {% elif field.name == 'last_name' %}Last Name: 
+                {% elif field.name == 'email' %}Email: 
+                {% elif field.name == 'dob' %}Date of Birth:
+                {% else %}{{field.label}}
+                {% endif %}
+            </th>
             <td>{{field}}</td>
         </tr>
         {% endfor %}
         <tr>
             <td></td>
-            <td><input type="submit" name="update_account" value="Update"></td>
+            <td><input type="submit" name="update_account" value="Update" class="update-button"></td>
         </tr>
     </table>
 </form>
+
+</div>
+
 
 {% endblock %}

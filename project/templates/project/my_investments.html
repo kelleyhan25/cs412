@@ -1,8 +1,8 @@
 <!--project/templates/project/my_investments.html-->
 {% extends 'project/base.html' %}
 {% block content %}
-
-<h3>My ETF Investments</h3>
+<div class="table-card">
+    <h3>My ETF Investments</h3>
 <table class="company-table">
     <thead>
         <tr>
@@ -51,6 +51,7 @@
 </table>
 <table class="company-table">
     <h3>Balances (USD) </h3>
+    <p>Last updated: {{last_updated}}</p>
     <thead>
         <tr>
             <th>Account Balance</th>
@@ -66,4 +67,6 @@
         </tr>
     </tbody>
 </table>
+</div>
+
 {% endblock %}

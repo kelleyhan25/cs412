@@ -2,7 +2,7 @@
 {% extends 'project/base.html' %}
 {% block content %}
 
-<div>
+<div class="table-card">
     <h3>Buy Shares: {{bucket.bucket_name}} {{bucket.bucket_symbol}}</h3>
 
     <div class="table-card">
@@ -10,17 +10,12 @@
             <h3>ETF Details</h3>
             <thead>
                 <tr>
-                    <th>Description</th>
                     <th>Price Per Share USD</th>
                     <th>Total Value in Billions:</th>
-                    
-                    
-                    
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>{{bucket.description}}</td>
                     <td>{{bucket.price_per_share}} (Price last updated: {{price_last_updated}})</td>
                     <td>{{bucket.total_value}} B</td>
                 </tr>
@@ -47,13 +42,21 @@
             </tbody>
         </table>
 
-        <form method="POST">
+        <form method="POST" class="buy-form">
             {% csrf_token %}
             <table>
-                {{form.as_table}}
+                {% for field in form %}
+                <tr>
+                    <th>
+                        {% if field.name == 'shares_owned' %}Number of Shares:
+                        {% endif %}
+                    </th>
+                    <td>{{field}}</td>
+                </tr>
+                {% endfor %}
             </table>
             <br>
-            <input type="submit" name="BUY" value="BUY">
+            <input type="submit" name="BUY" value="BUY" class="buy-button">
         </form>
        
         

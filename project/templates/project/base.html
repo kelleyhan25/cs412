@@ -18,7 +18,7 @@
                     <li><a href="{% url 'companies' %}">Companies</a></li>
                     {% if request.user.is_authenticated %}
                     <li><a href="{% url 'account' %}">Account</a></li>
-                    <li><p>Logged In: {{ request.user}}</p></li>
+                   
                     <li>
                         <form method="post" action="{% url 'logout' %}">
                             {% csrf_token %}
