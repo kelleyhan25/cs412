@@ -164,6 +164,8 @@ class BuyETFShares(LoginRequiredMixin, DetailView, CreateView):
         shares = form.cleaned_data['shares_owned']
         total_cost = shares * bucket.price_per_share
 
+        # https://stackoverflow.com/questions/34319752/how-to-raise-a-error-inside-form-valid-method-of-a-createview
+
         if customer.cash_value < total_cost: 
             form.add_error(None, "Insufficient funds")
             return self.form_invalid(form)
@@ -212,6 +214,7 @@ class CompanyDetailView(LoginRequiredMixin, CreateView, DetailView):
         shares = form.cleaned_data['shares_purchased']
         total_cost = shares * company.stock_price
 
+        # https://stackoverflow.com/questions/34319752/how-to-raise-a-error-inside-form-valid-method-of-a-createview
         if customer.cash_value < total_cost:
             form.add_error(None, "Insufficient funds")
             return self.form_invalid(form)
@@ -321,11 +324,15 @@ class AccountDetailView(LoginRequiredMixin, DetailView, UpdateView):
         return reverse('account')
     
 
-class HomePageView(DetailView):
+class HomePageView(LoginRequiredMixin, DetailView):
     '''a view to display the homepage and summary'''
     template_name = 'project/home.html'
     model = Customer 
     context_object_name = 'homepage'
+
+    def get_login_url(self):
+        '''return the URL required for login'''
+        return reverse('login')
 
     def get_object(self):
         '''return the currently logged in user account info'''
