@@ -333,6 +333,9 @@ class HomePageView(LoginRequiredMixin, DetailView):
     def get_login_url(self):
         '''return the URL required for login'''
         return reverse('login')
+    
+    def get_success_url(self):
+        return reverse('account')
 
     def get_object(self):
         '''return the currently logged in user account info'''
