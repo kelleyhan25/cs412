@@ -1,0 +1,82 @@
+<!-- project/templates/home.html -->
+{% extends 'project/base.html' %}
+
+{% block content %}
+<title>Dashboard Homepage</title>
+<br><br><br>
+<div class="overview-grid"> 
+    <div class="left-column">
+        <div class="balance-box">
+            <h2 class="balance">${{account_balance}}</h2>
+            <h3>Available Balance</h3>
+        </div>
+        <div class="summary-box">
+            {{graph_div_scatter|safe}}
+        </div>
+        
+    </div>
+
+    <div class="right-column">
+        
+                <div class="stat-card">
+                    <div class="stat-label">DOW JONES (DOW)</div>
+                    <div class="stat-value">{{dowjones}} USD</div>
+                    <div class="posneg
+                                    {% if '↑' in djchange %}
+                                        posneg-positive
+                                    {% elif '↓' in djchange %}
+                                        posneg-negative
+                                    {% else %}
+                                        posneg-neutral
+                                    {% endif %}
+                                ">
+                                {{spchange}}
+                             </div>
+                    
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">S&P 500</div>
+                    <div class="stat-value">{{sp500}} USD</div>
+                    
+                    <div class="posneg
+                                    {% if '↑' in spchange %}
+                                        posneg-positive
+                                    {% elif '↓' in spchange %}
+                                        posneg-negative
+                                    {% else %}
+                                        posneg-neutral
+                                    {% endif %}
+                                ">
+                                {{spchange}}
+                             </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">NASDAQ</div>
+                    <div class="stat-value">{{nasdaqusd}} USD</div>
+                    
+                    <div class="posneg
+                                    {% if '↑' in nchange %}
+                                        posneg-positive
+                                    {% elif '↓' in nchange %}
+                                        posneg-negative
+                                    {% else %}
+                                        posneg-neutral
+                                    {% endif %}
+                                ">
+                                {{nchange}}
+                             </div>
+                </div>
+            
+       
+
+        
+    </div>
+
+
+</div>
+
+
+
+
+
+{% endblock %}

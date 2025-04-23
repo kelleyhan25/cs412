@@ -2,12 +2,34 @@
 {% extends 'project/base.html' %}
 {% block content %}
 
-<div>
-    <h3>Sell Shares </h3>
+<div class="table-card">
+    <h3>Sell 
+        {% if investment.bucket %}
+            {{ investment.bucket.bucket_name}} {{investment.bucket.bucket_symbol}}
+        {% else %}
+            {{ investment.company.company_name }} {{ investment.company.stock_symbol}}
+        {% endif %}
+    </h3>
+
+    <p>Quantity:
+        {% if investment.bucket %}
+            {{ investment.shares_owned}}
+        {% else %}
+            {{ investment.shares_purchased }}
+        {% endif %}
+    </p>
+
+    <p>Total Estimated Value:  
+        {% if investment.bucket %}
+            {{ total_value}}
+        {% else %}
+            {{ total_value }}
+        {% endif %}
+    </p>
 
     <form method="POST">
         {% csrf_token %}
-        <input type="submit" value="Sell">
+        <input type="submit" name="sell" value="Sell" class="sell-button">
     </form>
       
 

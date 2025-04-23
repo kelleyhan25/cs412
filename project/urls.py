@@ -4,7 +4,7 @@ from .views import *
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    path(r'', views.BrowseETFsView.as_view(), name="home"),
+    path(r'', views.HomePageView.as_view(), name="home"),
     path(r'browse/', views.BrowseETFsView.as_view(), name="browse"),
     path(r'companies/', views.CompaniesListView.as_view(), name='companies'),
     path(r'login/', auth_views.LoginView.as_view(template_name='project/login.html'), name="login"),

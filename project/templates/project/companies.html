@@ -2,45 +2,6 @@
 {% extends 'project/base.html' %}
 {% block content %}
 
-<div class="dashboard">
-    <h3 class="dash-head">Overview</h3>
-    <div class="stats-grid">
-        <div class="stat-card">
-            <div class="stat-label">DOW JONES (DOW)</div>
-            <div class="stat-value">{{dowjones}} USD</div>
-            <div class="posneg
-                            {% if '↑' in djchange %}
-                                posneg-positive
-                            {% elif '↓' in djchange %}
-                                posneg-negative
-                            {% else %}
-                                posneg-neutral
-                            {% endif %}
-                        ">
-                        {{spchange}}
-                     </div>
-            
-        </div>
-        <div class="stat-card">
-            <div class="stat-label">S&P 500</div>
-            <div class="stat-value">{{sp500}} USD</div>
-            
-            <div class="posneg
-                            {% if '↑' in spchange %}
-                                posneg-positive
-                            {% elif '↓' in spchange %}
-                                posneg-negative
-                            {% else %}
-                                posneg-neutral
-                            {% endif %}
-                        ">
-                        {{spchange}}
-                     </div>
-        </div>
-    </div>
-  
-    
-
     <div class="table-card">
         <h3 class="dash-head">Companies</h3>
         {% include "project/search.html" %}

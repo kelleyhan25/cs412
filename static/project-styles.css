@@ -2,6 +2,79 @@
     padding: 2rem; 
 }
 
+.overview-grid {
+    display: grid; 
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 20px; 
+    height: 600px; 
+}
+
+.dashboard-grid {
+    display: grid; 
+    grid-template-columns: 1fr 2fr;
+    gap: 2rem; 
+    padding: 2rem;
+}
+
+.left-column {
+    display: flex; 
+    flex-direction: column;
+    gap: 2rem; 
+}
+
+.right-column {
+    display: flex; 
+    flex-direction: column; 
+    gap: 1.5rem; 
+}
+
+
+.balance-box {
+    background: white;
+    padding: 20px;
+    margin-bottom: 20px; 
+    border-radius: 10px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.05); 
+    text-align: center;
+
+}
+
+.links-box, .summary-box {
+    background: white;
+    padding: 20px;
+    margin-bottom: 20px; 
+    border-radius: 10px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.05); 
+}
+
+.summary-box {
+    height: 1000px; 
+}
+
+
+.balance-box h2 {
+    font-size: 36px;
+    margin: 0;
+}
+
+.links-box ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
+.links-box li {
+    margin: 8px 0;
+}
+
+.summary-box {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #aaa;
+}
+
 .search-button {
     padding: 0.6rem 1.2rem; 
     background-color: #2563eb;
@@ -115,6 +188,10 @@ label {
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    display: flex; 
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
 }
   
 .stat-label {
@@ -200,6 +277,30 @@ label {
     margin-top:10px; 
 }
 
+a.sell-button {
+    color: white !important; 
+}
+
+.sell-button {
+    background-color: #f62626;
+    color: white !important;
+    padding: 10px; 
+    border: none; 
+    border-radius: 6px;
+    cursor: pointer; 
+    width: 100px;
+    font-weight: bold; 
+    margin-top:10px; 
+}
+
+
+.sell-button:visited {
+    color: white; 
+}
+.sell-button:hover {
+    background-color: #eb2525;
+}
+
 .buy-button:hover {
     background-color: #2563eb;
 }
@@ -281,13 +382,6 @@ body {
     cursor: pointer; 
 }
 
-
-h1,h2{
-    font-weight: normal;
-    background: rgb(64, 64, 238);
-    margin: 0; 
-    text-align: center;
-}
 
 a, a:visited {
     display: block;

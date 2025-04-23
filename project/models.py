@@ -92,7 +92,7 @@ class Customer(models.Model):
         for investment in self.get_investments(): 
             investment.bucket.update_price_per_share()
             shares = Decimal(str(investment.shares_owned))
-            investment_value = shares * investment.bucket.price_per_share
+            investment_value = shares * Decimal(str(investment.bucket.price_per_share))
             new_value += investment_value
         
         # updates the company investment values 
@@ -100,7 +100,7 @@ class Customer(models.Model):
         for investment in self.getCompanyInvestments():
             investment.company.update_stock_price()
             shares = Decimal(str(investment.shares_purchased))
-            investment_value = shares * investment.company.stock_price
+            investment_value = shares * Decimal(str(investment.company.stock_price))
             new_value += investment_value
         
         self.stock_value = new_value
@@ -133,7 +133,7 @@ class Company(models.Model):
         '''updates stock price with most recent data from yfinance api'''
         price = get_stock_price(self.stock_symbol)
         if price is not None: 
-            self.stock_price = price
+            self.stock_price = Decimal(str(price))
             self.save()
         return self.stock_price
     

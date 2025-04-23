@@ -9,8 +9,72 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User 
 from django.contrib.auth import login 
 from django.utils.timesince import timesince
+from datetime import datetime, timedelta 
+import plotly 
+import plotly.graph_objs as go 
 
 # Create your views here.
+
+class HomePageView(DetailView):
+    '''a view to display the homepage and summary'''
+    template_name = 'project/home.html'
+    model = Customer 
+    context_object_name = 'homepage'
+
+    def get_object(self):
+        '''return the currently logged in user account info'''
+        return Customer.objects.get(user=self.request.user)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        dowjones = get_stock_price("^DJI")
+        djchange = format_price_change(get_percent_change("^DJI"))
+        sp500 = get_stock_price("^GSPC")
+        spchange = format_price_change(get_percent_change("^GSPC"))
+        nasdaqusd = get_stock_price("^IXIC")
+        nchange = format_price_change(get_percent_change("^IXIC"))
+        context['nasdaqusd'] = nasdaqusd
+        context['nchange'] = nchange
+        context['sp500'] = sp500
+        context['spchange'] = spchange
+        context['djchange'] = djchange
+        context['dowjones'] = dowjones
+        customer = self.get_object()
+        account_balance = customer.account_balance
+        context['account_balance'] = account_balance
+
+        # the sample code provided when learning about how to make graphs on blackboard did not work, so i had to google and read the plotly documentation to figure out how to do it
+        # needed a trace, which is the data list 
+        # https://plotly.com/python/reference/scatter/
+        #https://plotly.com/python/creating-and-updating-figures/
+        nasdaq = yf.Ticker("^IXIC")
+        data = nasdaq.history(period="30d")
+        x = data.index # dates 
+        y = data['Close'] # stock closing prices 
+
+        fig = go.Figure() 
+        fig.add_trace(go.Scatter(x=x, y=y, mode='lines', name='Closing Price'))
+
+        fig.update_layout(
+            title="NASDAQ Stock Price (Last 30 Days)",
+            xaxis_title="Date",
+            yaxis_title="Price (USD)",
+            height=350,
+        )
+
+        graph_div_scatter = plotly.offline.plot(
+            {"data": fig.data, 
+             "layout": fig.layout},
+             auto_open=False,
+             output_type="div"
+        )
+
+        context['graph_div_scatter'] = graph_div_scatter
+
+        return context
+    
+
+
 class RegistrationView(CreateView):
     '''account registration view'''
     template_name = 'project/register.html'
@@ -63,6 +127,16 @@ class SellETFShares(LoginRequiredMixin, DeleteView):
     model = Investment
     context_object_name = 'investment'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        investment = self.get_object()
+        investment.bucket.update_price_per_share()
+
+        shares = investment.shares_owned 
+        price = investment.bucket.price_per_share 
+        context['total_value'] = round(Decimal(str(shares)) * Decimal(str(price)), 2) 
+        return context 
+    
 
     def get_success_url(self):
         '''return a url for redirection after selling'''
@@ -85,6 +159,16 @@ class SellCompanyShares(LoginRequiredMixin, DeleteView):
     model = InvestmentCompany
     context_object_name = 'investment'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        investment = self.get_object()
+        investment.company.update_stock_price()
+
+        shares = investment.shares_purchased
+        price = investment.company.stock_price 
+        context['total_value'] = round(Decimal(str(shares)) * Decimal(str(price)), 2)
+        return context 
+    
 
     def get_success_url(self):
         '''return a url for redirection after selling'''
@@ -176,7 +260,6 @@ class CompanyDetailView(LoginRequiredMixin, CreateView, DetailView):
         formatted_change = format_price_change(change)
         
         context['formatted_change'] = formatted_change
-        
         return context
     
     def form_valid(self, form):
