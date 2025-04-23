@@ -55,6 +55,7 @@ class HomePageView(DetailView):
         fig = go.Figure() 
         fig.add_trace(go.Scatter(x=x, y=y, mode='lines', name='Closing Price'))
 
+        # layout labels https://plotly.com/python/figure-labels/
         fig.update_layout(
             title="NASDAQ Stock Price (Last 30 Days)",
             xaxis_title="Date",
