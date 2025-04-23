@@ -1,9 +1,10 @@
 # File: models.py 
 # Author : Kelley Han kelhan@bu.edu 4/13/25
 # Description: All of the models necessary for the ETF Manager project 
+
 from django.db import models
 from django.contrib.auth.models import User
-import yfinance as yf 
+import yfinance as yf  # anything i use from yf is from this documentation https://yfinance-python.org
 from decimal import Decimal 
 from django.utils import timezone 
 from datetime import timedelta
@@ -83,6 +84,7 @@ class Customer(models.Model):
     
     def update_balances(self):
         '''updates a customer's balances based on current stock prices on yfinance api, updates every half hour'''
+        # https://medium.com/django-unleashed/python-timedelta-with-examples-and-use-cases-81def9140880
         if self.last_updated and timezone.now() - self.last_updated < timedelta(minutes=30):
             return False 
         
