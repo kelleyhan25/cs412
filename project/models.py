@@ -66,7 +66,7 @@ class Customer(models.Model):
     cash_value = models.DecimalField(max_digits=12, decimal_places=2)
     stock_value = models.DecimalField(max_digits=12, decimal_places=2)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    last_updated = models.DateTimeField(blank=True)
+    last_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         '''return a string representation of this Customer object'''

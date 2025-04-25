@@ -16,4 +16,5 @@ urlpatterns = [
     path(r'register/', RegistrationView.as_view(), name="register"),
     path(r'sell_etf/<int:pk>', SellETFShares.as_view(), name="sell_etf"),
     path(r'sell_company/<int:pk>', SellCompanyShares.as_view(), name="sell_company"),
+    path(r'insufficient_funds/', InsufficientFundsView.as_view(), name="insufficient_funds"),
 ]

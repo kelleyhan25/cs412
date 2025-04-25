@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.generic import *
 from .models import *
@@ -164,11 +164,12 @@ class BuyETFShares(LoginRequiredMixin, DetailView, CreateView):
         shares = form.cleaned_data['shares_owned']
         total_cost = shares * bucket.price_per_share
 
-        # https://stackoverflow.com/questions/34319752/how-to-raise-a-error-inside-form-valid-method-of-a-createview
+        
 
         if customer.cash_value < total_cost: 
-            form.add_error(None, "Insufficient funds")
-            return self.form_invalid(form)
+            # returning reverse('insufficient_funds') didn't work, so i googled it 
+            # https://stackoverflow.com/questions/66567285/how-to-redirect-to-another-view-page-if-the-form-is-invalid
+            return redirect('insufficient_funds')
         
         customer.cash_value -= total_cost
         customer.stock_value += total_cost
@@ -214,10 +215,11 @@ class CompanyDetailView(LoginRequiredMixin, CreateView, DetailView):
         shares = form.cleaned_data['shares_purchased']
         total_cost = shares * company.stock_price
 
-        # https://stackoverflow.com/questions/34319752/how-to-raise-a-error-inside-form-valid-method-of-a-createview
+        
         if customer.cash_value < total_cost:
-            form.add_error(None, "Insufficient funds")
-            return self.form_invalid(form)
+            # returning reverse('insufficient_funds') didn't work, so i googled it 
+            # https://stackoverflow.com/questions/66567285/how-to-redirect-to-another-view-page-if-the-form-is-invalid
+            return redirect('insufficient_funds')
         
         customer.cash_value -= total_cost
         customer.stock_value += total_cost
@@ -389,3 +391,14 @@ class HomePageView(LoginRequiredMixin, DetailView):
         context['graph_div_scatter'] = graph_div_scatter
 
         return context
+    
+class InsufficientFundsView(LoginRequiredMixin, TemplateView):
+    '''generic view to display insufficient funds error'''
+    template_name = 'project/insufficient_funds.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        customer = Customer.objects.get(user=self.request.user)
+        context['customer'] = customer
+
+        return context 

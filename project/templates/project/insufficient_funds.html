@@ -1,0 +1,17 @@
+<!-- project/templates/insufficient_funds.html -->
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<div class="table-card">
+    <h3>Insufficient Funds</h3>
+
+    <p>Sorry, you do not have enough funds to complete this transaction.</p>
+    <p>Your current account balance: ${{ customer.cash_value }}</p>
+    
+
+    <a href="{% url 'my_investments' %}" class="buy-button">Return to my investments</a>
+    <a href="{% url 'account' %}" class="buy-button">Manage Account</a>
+</div>
+
+{% endblock %}
