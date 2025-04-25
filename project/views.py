@@ -2,7 +2,8 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.generic import *
 from .models import *
-from .models import Company, get_stock_price, get_percent_change, format_price_change
+from .models import Company
+from . import helper_functions 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import CreateInvestmentForm, CreateCompanyInvestmentForm, CreateAccountForm, UpdateAccountForm
 from django.contrib.auth.forms import UserCreationForm
@@ -199,8 +200,8 @@ class CompanyDetailView(LoginRequiredMixin, CreateView, DetailView):
 
         company = context['company']
         company.update_stock_price()
-        change = get_percent_change(company.stock_symbol)
-        formatted_change = format_price_change(change)
+        change = helper_functions.get_percent_change(company.stock_symbol)
+        formatted_change = helper_functions.format_price_change(change)
         
         context['formatted_change'] = formatted_change
         return context
@@ -257,10 +258,10 @@ class CompaniesListView(ListView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        dowjones = get_stock_price("^DJI")
-        djchange = format_price_change(get_percent_change("^DJI"))
-        sp500 = get_stock_price("^GSPC")
-        spchange = format_price_change(get_percent_change("^GSPC"))
+        dowjones = helper_functions.get_stock_price("^DJI")
+        djchange = helper_functions.format_price_change(helper_functions.get_percent_change("^DJI"))
+        sp500 = helper_functions.get_stock_price("^GSPC")
+        spchange = helper_functions.format_price_change(helper_functions.get_percent_change("^GSPC"))
         context['sp500'] = sp500
         context['spchange'] = spchange
         context['djchange'] = djchange
@@ -345,12 +346,12 @@ class HomePageView(LoginRequiredMixin, DetailView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        dowjones = get_stock_price("^DJI")
-        djchange = format_price_change(get_percent_change("^DJI"))
-        sp500 = get_stock_price("^GSPC")
-        spchange = format_price_change(get_percent_change("^GSPC"))
-        nasdaqusd = get_stock_price("^IXIC")
-        nchange = format_price_change(get_percent_change("^IXIC"))
+        dowjones = helper_functions.get_stock_price("^DJI")
+        djchange = helper_functions.format_price_change(helper_functions.get_percent_change("^DJI"))
+        sp500 = helper_functions.get_stock_price("^GSPC")
+        spchange = helper_functions.format_price_change(helper_functions.get_percent_change("^GSPC"))
+        nasdaqusd = helper_functions.get_stock_price("^IXIC")
+        nchange = helper_functions.format_price_change(helper_functions.get_percent_change("^IXIC"))
         context['nasdaqusd'] = nasdaqusd
         context['nchange'] = nchange
         context['sp500'] = sp500
@@ -365,10 +366,8 @@ class HomePageView(LoginRequiredMixin, DetailView):
         # needed a trace, which is the data list 
         # https://plotly.com/python/reference/scatter/
         #https://plotly.com/python/creating-and-updating-figures/
-        nasdaq = yf.Ticker("^IXIC")
-        data = nasdaq.history(period="30d")
-        x = data.index # dates 
-        y = data['Close'] # stock closing prices 
+        x = helper_functions.get_nasdaq_x("^IXIC")
+        y = helper_functions.get_nasdaq_y("^IXIC")
 
         fig = go.Figure() 
         fig.add_trace(go.Scatter(x=x, y=y, mode='lines', name='Closing Price'))

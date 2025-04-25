@@ -44,3 +44,17 @@ def format_price_change(percentage):
         return f"↓ {percentage}%"
     else:
         return f"0.00%"
+    
+def get_nasdaq_x(stock_symbol):
+    '''returns x values for graph'''
+    nasdaq = yf.Ticker(stock_symbol)
+    data = nasdaq.history(period="30d")
+    x = data.index # dates 
+    return x 
+
+def get_nasdaq_y(stock_symbol):
+    '''returns y values for graph'''
+    nasdaq = yf.Ticker(stock_symbol)
+    data = nasdaq.history(period="30d")
+    y = data['Close'] # stock closing prices 
+    return y
