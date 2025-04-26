@@ -1,3 +1,8 @@
+# File Name: admin.py
+# Author: Kelley Han kelhan@bu.edu 
+# Description: registers all my models to the admin tool 
+
+
 from django.contrib import admin
 
 # Register your models here.

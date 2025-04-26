@@ -1,3 +1,8 @@
+# File name: urls.py 
+# Author: kelley han kelhan@bu.edu 
+# Description: all the url to view mappings 
+
+
 from django.urls import path 
 from . import views 
 from .views import *

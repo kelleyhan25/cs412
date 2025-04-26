@@ -1,3 +1,8 @@
+# File Name: helper_functions.py 
+# Author: kelley Han kelhan@bu.edu 
+# Description: all the helper functions relating to the use of the yfinance api 
+
+
 import yfinance as yf  # anything i use from yf is from this documentation https://yfinance-python.org
 
 

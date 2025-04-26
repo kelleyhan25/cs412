@@ -1,3 +1,8 @@
+# File name: forms.py
+# Author: Kelley Han kelhan@bu.edu 
+# Description: creates all the forms needed for this project 
+
+
 from django import forms 
 from .models import *
 

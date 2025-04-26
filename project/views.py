@@ -1,3 +1,8 @@
+# File name: views.py 
+# Author: kelley han kelhan@bu.edu 
+# Description: includes all the views for the project 
+
+
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.generic import *
