@@ -1,3 +1,17 @@
+/* File Name: project-styles.css */
+/* Author: Kelley Han kelhan@bu.edu */ 
+/* Description: all of the styling components for this project */
+/* Resources used:
+    https://www.w3schools.com/CSS/css3_borders.asp
+    https://www.w3schools.com/CSS/css3_image_center.asp
+    https://www.w3schools.com/CSS/css3_buttons.asp
+    https://www.w3schools.com/CSS/css_grid.asp
+    https://www.w3schools.com/cssref/css3_pr_box-shadow.php
+    https://www.w3schools.com/css/css3_transitions.asp
+*/
+
+
+
 .dashboard {
     padding: 2rem; 
 }
